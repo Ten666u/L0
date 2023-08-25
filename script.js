@@ -724,8 +724,22 @@ const orderAllInput = () =>{
 
 //=============================>
 
+const hintShowFree = (e) =>{
+    let hint = createTagWithClass("div", "hint_free")
 
+    if(e.querySelector(".hint_free")){
+        return
+    }
 
+    hint.textContent = "Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно"
+
+    e.appendChild(hint)
+}
+
+const hintHideFree = (e) =>{
+    let hint = e.querySelector(".hint_free")
+    e.removeChild(hint)
+}
 
 
 

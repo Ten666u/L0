@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./styles/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="./styles/style.css">
 </head>
-<body ontouchstart="">
+<body>
     <header>
         <div class="header_container">
             <button class="nav_elem-lines"></button>
@@ -93,7 +93,7 @@
                 <div class="return_shipping-container">
                     <div class="checkmark-icon"></div>
                     <span class="return_shipping-detail">
-                        Обратная доставка товаров на склад при отказе —<button class="return_shipping-focus" data-explanation = "Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно" ontouchstart="">бесплатно</button>
+                        Обратная доставка товаров на склад при отказе —<button class="return_shipping-focus" onfocus="hintShowFree(this)" onblur="hintHideFree(this)">бесплатно</button>
                     </span>
                 </div>
             </div>
@@ -172,7 +172,7 @@
             <div class="order_shipping-container">
                 <div class="checkmark-icon order_checkmark-icon"></div>
                 <span class="return_shipping-detail">
-                    Обратная доставка товаров на склад при отказе —<button class="return_shipping-focus order_return-focus" data-explanation = "Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно" ontouchstart="">бесплатно</button>
+                    Обратная доставка товаров на склад при отказе —<button class="return_shipping-focus order_return-focus" onfocus="hintShowFree(this)" onblur="hintHideFree(this)">бесплатно</button>
                 </span>
             </div>
             <div class="order_payment">

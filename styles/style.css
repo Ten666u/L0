@@ -824,8 +824,25 @@ footer::before {
   position: relative;
   display: inline-block;
 }
-.return_shipping-focus::after {
-  content: attr(data-explanation);
+
+@-webkit-keyframes hint {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hint {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.hint_free {
   position: absolute;
   color: black;
   left: 50%;
@@ -839,21 +856,11 @@ footer::before {
   -webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
           box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
   border-radius: 8px;
-  z-index: -1;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: inherit;
-  transition: inherit;
-}
-.return_shipping-focus:focus {
-  cursor: pointer;
-}
-.return_shipping-focus:focus::after {
-  opacity: 1;
-  visibility: visible;
   z-index: 1;
-  top: calc(100% + 2px);
-  cursor: default;
+  top: calc(100% + 4px);
+  -webkit-animation: hint 0.5s forwards;
+          animation: hint 0.5s forwards;
+  pointer-events: none;
 }
 
 .basket_card-container {
@@ -1153,7 +1160,7 @@ input:not(:placeholder-shown) + .floating-label {
   margin-left: 2px;
   position: static;
 }
-.return_shipping-focus.order_return-focus:active::after {
+.return_shipping-focus.order_return-focus .hint_free {
   top: calc(100% - 5px);
 }
 
