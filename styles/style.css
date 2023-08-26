@@ -92,6 +92,9 @@ h2 {
   height: 48px;
   padding: 12px 10px;
 }
+.nav_elem-lines:hover {
+  border: 1px solid rgb(255, 255, 255);
+}
 
 .nav_elem-logo {
   text-decoration: none;
@@ -106,9 +109,6 @@ h2 {
   text-align: left;
   color: white;
   margin-right: 30px;
-}
-.nav_elem-logo:hover {
-  color: white;
 }
 
 .header_search {
@@ -318,18 +318,32 @@ footer::before {
   margin-bottom: 16px;
   height: 24px;
 }
+.basket_buttons-items.absence_list-hide {
+  margin-bottom: 40px;
+}
 
 .basket_hide-items {
   width: 20px;
   height: 20px;
   background: url("./images/hide-items-icon.svg");
   margin-top: 2px;
+  -webkit-transition: -webkit-transform 0.35s ease-in-out;
+  transition: -webkit-transform 0.35s ease-in-out;
+  transition: transform 0.35s ease-in-out;
+  transition: transform 0.35s ease-in-out, -webkit-transform 0.35s ease-in-out;
+}
+.basket_hide-items.items_hidden {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
 }
 
 .basket_form-line {
   height: 1px;
   content: "";
   background: rgba(0, 0, 0, 0.1);
+}
+.basket_form-line.hide {
+  display: none;
 }
 
 .basket_item-list {
@@ -365,7 +379,7 @@ footer::before {
   color: rgb(151, 151, 175);
 }
 .basket_item .basket_item-info.absence_item-info {
-  width: 309px;
+  width: auto;
 }
 .basket_item .item_buttons.item_buttons-absence {
   margin-right: 126px;
@@ -393,6 +407,8 @@ footer::before {
 }
 
 .basket_item-pic {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   width: 72px;
   height: 96px;
   border-radius: 8px;
@@ -403,6 +419,7 @@ footer::before {
 
 .basket_item-info {
   width: 275px;
+  position: relative;
 }
 
 .item_info-name {
@@ -632,6 +649,9 @@ footer::before {
 .absence_item-header {
   margin-top: 37.5px;
 }
+.absence_item-header.items_hidden {
+  margin-bottom: 40px;
+}
 
 .absence_item-quantity {
   font-family: Segoe UI;
@@ -644,6 +664,9 @@ footer::before {
 
 .absence_item-list {
   margin-bottom: 40px;
+}
+.absence_item-list.hide {
+  display: none;
 }
 
 .basket_container-form {
@@ -813,20 +836,11 @@ footer::before {
   text-align: left;
 }
 
-.return_shipping-focus {
-  margin-left: 4px;
-  color: rgb(12, 180, 119);
-  border-bottom: 1px dashed rgba(12, 180, 119, 0.2);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  position: relative;
-  display: inline-block;
-}
-
 @-webkit-keyframes hint {
   0% {
+    opacity: 0;
+  }
+  50% {
     opacity: 0;
   }
   100% {
@@ -838,11 +852,26 @@ footer::before {
   0% {
     opacity: 0;
   }
+  50% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
   }
 }
-.hint_free {
+.return_shipping-focus {
+  margin-left: 4px;
+  color: rgb(12, 180, 119);
+  border-bottom: 1px dashed rgba(12, 180, 119, 0.2);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: relative;
+  display: inline-block;
+}
+.return_shipping-focus .hint_free {
+  visibility: hidden;
   position: absolute;
   color: black;
   left: 50%;
@@ -856,11 +885,15 @@ footer::before {
   -webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
           box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
   border-radius: 8px;
-  z-index: 1;
+  z-index: -1;
+  opacity: 0;
   top: calc(100% + 4px);
-  -webkit-animation: hint 0.5s forwards;
-          animation: hint 0.5s forwards;
-  pointer-events: none;
+}
+.return_shipping-focus:hover .hint_free {
+  z-index: 1;
+  visibility: visible;
+  -webkit-animation: hint 1s forwards;
+          animation: hint 1s forwards;
 }
 
 .basket_card-container {
@@ -1471,6 +1504,101 @@ input:not(:placeholder-shown) + .floating-label {
   display: none;
 }
 
+.item_hint {
+  visibility: hidden;
+  position: absolute;
+  color: black;
+  left: 50%;
+  -webkit-transform: translateX(-46%);
+          transform: translateX(-46%);
+  padding: 11px 16px 13px 16px;
+  width: 288px;
+  background: white;
+  -webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.3019607843);
+          box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.3019607843);
+  -webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
+          box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
+  border-radius: 8px;
+  z-index: -1;
+  opacity: 1;
+  top: calc(100% + 4px);
+  text-align: left;
+}
+.item_hint .hint_storage {
+  font-family: Segoe UI;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+}
+.item_hint .hint_txt {
+  font-family: Segoe UI;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 8px;
+}
+
+.info_icon:hover .item_hint {
+  z-index: 1;
+  visibility: visible;
+  -webkit-animation: hint 1s forwards;
+          animation: hint 1s forwards;
+}
+
+.price_hint {
+  visibility: hidden;
+  position: absolute;
+  color: black;
+  right: -9px;
+  width: 238px;
+  padding: 10px 16px 14px 16px;
+  background: white;
+  -webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.3019607843);
+          box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.3019607843);
+  -webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
+          box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1490196078);
+  border-radius: 8px;
+  z-index: 0;
+  opacity: 0;
+  top: calc(100% + 4px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 8px;
+     -moz-column-gap: 8px;
+          column-gap: 8px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.price_hint .price_hint-txt {
+  font-family: Segoe UI;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #A0A0A4;
+  text-align: left;
+}
+.price_hint .price_hint-txt div:first-child {
+  margin-bottom: 8px;
+}
+.price_hint .price_hint-discount {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: right;
+}
+.price_hint .price_hint-discount div:first-child {
+  margin-bottom: 8px;
+}
+
+.item_price-old:hover .price_hint {
+  z-index: 1;
+  visibility: visible;
+  -webkit-animation: hint 1s forwards;
+          animation: hint 1s forwards;
+}
+
 @media (max-width: 1000px) {
   body {
     min-width: 320px;
@@ -1640,6 +1768,7 @@ input:not(:placeholder-shown) + .floating-label {
     margin-bottom: 1px;
   }
   .basket_item-info {
+    position: static;
     width: auto;
   }
   .item_info-name {

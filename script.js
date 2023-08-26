@@ -6,9 +6,14 @@ let arrayItems = [
         size: [56].join("/"),
         owner: "Коледино WB",
         storage: "OOO Вайлдберриз",
+        storageDoc: "OOO «ВАЙЛДБЕРРИЗ»",
+        ogrn: "1067746062449",
+        storageAddress: "ул. Ленинская Слобода, 26, стр. 3, Москва этаж 3",
         newPrice: 522,
         oldPrice: 1051,
         left: 2,
+        discount: 300,
+        persentDiscount: 55
     },
     {
         name: "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
@@ -16,18 +21,28 @@ let arrayItems = [
         color: "прозрачный",
         owner: "Коледино WB",
         storage: "OOO Мегапрофстиль",
+        storageDoc: "OOO «МЕГАПРОФСТИЛЬ»",
+        ogrn: "5167746237148",
+        storageAddress: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
         newPrice: 10500,
         oldPrice: 11000,
         left: 200,
+        discount: 300,
+        persentDiscount: 55,
     },
     {
         name: 'Карандаши цветные Faber-Castell "Замок", набор 24 цвета, заточенные, шестигранные, Faber‑Castell',
         picture: "third_item.png",
         owner: "Коледино WB",
         storage: "OOO Вайлдберриз",
+        storageDoc: "OOO «ВАЙЛДБЕРРИЗ»",
+        ogrn: "1067746062449",
+        storageAddress: "ул. Ленинская Слобода, 26, стр. 3, Москва этаж 3",
         newPrice: 247,
         oldPrice: 475,
         left: 2,
+        discount: 300,
+        persentDiscount: 55,
     },
 ];
 
@@ -94,7 +109,7 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
         "beforeend",
         `<div class="item_choice-btn">
             <label class="custom-checkbox">
-                <input type="checkbox" class="wb-checkbox" name="item-checkbox">
+                <input type="checkbox" class="wb-checkbox" name="item-checkbox" onchange="checkBoxItemChange()">
             </label>
         </div>`
     );
@@ -142,14 +157,20 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
         itemDetail.append(itemColorSize);
     }
 
-    //Добавляем склад и продавца
+    //Добавляем склад и продавца и подсказку
     itemDetail.insertAdjacentHTML(
         "beforeend",
         `
         <span class="item_info-detail item_info-owner">${obj.owner}</span>
         <div class='item_storage-container'>
             <span class="item_info-detail item_info-storage">${obj.storage}</span>
-            <button class="info_icon"></button>
+            <button class="info_icon">
+                <div class = "item_hint">
+                    <div class = "hint_storage">${obj.storageDoc}</div>
+                    <div class = "hint_txt">ОГРН: ${obj.ogrn}</div>
+                    <div class = "hint_txt">${obj.storageAddress}</div>
+                </div>
+            </button>
         </div>
         `
     );
@@ -187,7 +208,7 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
             <button class="item_like" onClick = "changeColorBtn(this)">
                 <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
             </button>
-            <button class="item_delete">
+            <button class="item_delete" onclick="deleteItem(this, 'basket_item')">
                 <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
             </button>
         </div>
@@ -199,7 +220,19 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
         `
         <div class="item_price-container" id = "priceContainer-${i}">
             <span class="item_price-new" id = "itemPriceNew-${i}">${obj.newPrice}<span class="item_price-currency">сом</span></span>
-            <span class="item_price-old"  id = "itemPriceOld-${i}">${obj.oldPrice} сом</span>
+            <button class="item_price-old"  id = "itemPriceOld-${i}">
+                ${obj.oldPrice} сом
+                <div class="price_hint">
+                    <div class="price_hint-txt">
+                        <div>Скидка ${obj.persentDiscount}%</div>
+                        <div>Скидка покупателя 10%</div>
+                    </div>
+                    <div class="price_hint-discount">
+                        <div>${obj.discount} сом</div>
+                        <div>−30 сом</div>
+                    </div>
+                </div>
+            </button>
         </div>
         `
     );
@@ -280,7 +313,7 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
             <button class="item_like" onClick = "changeColorBtn(this)">
                 <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
             </button>
-            <button class="item_delete">
+            <button class="item_delete" onclick = "deleteItem(this, 'absence_item')">
                 <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
             </button>
         </div>
@@ -309,7 +342,7 @@ for(let i = 0; i <= personalArray.length - 1; i++){
             <label for="personalAddress${i}">
                 <span class="label_txt">${addressObj.address}</span>
             </label>
-            <button class="item_delete">
+            <button class="item_delete" onclick="deletePersonalAddress(this, 'choose_address')">
                 <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
             </button>
         </div>
@@ -338,21 +371,13 @@ for(let i = 0; i <= pointArray.length - 1; i++){
                     <span class="point_detail-txt absence">Пункт выдачи</span>
                 </div>
             </label>
-            <button class="item_delete">
+            <button class="item_delete" onclick="deletePointAddress(this, 'choose_address')">
                 <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
             </button>
         </div>
         `
     );
 }
-
-const selectAllItems = (e) => {
-    let checkboxes = document.getElementsByName("item-checkbox");
-
-    for (let i = 0; i <= checkboxes.length - 1; i++) {
-        checkboxes[i].checked = e.checked;
-    }
-};
 
 const selectPayImmediately = (e) => {
     const payDetailBasket = document.getElementById("payDetailBasket");
@@ -558,8 +583,14 @@ const checkInputPhone = (e) =>{
 
     str = e.value.match(onlyNumber)
 
-    str.length >= 12 ? str = str.slice(0, 11) : str = str
-    
+    if(str == null){
+        e.value = ""
+        return
+    }
+    else{
+        str.length >= 12 ? str = str.slice(0, 11) : str = str
+    }
+
     str ? str = str.join("") : str = ""
     let phoneStr = ""
 
@@ -724,23 +755,70 @@ const orderAllInput = () =>{
 
 //=============================>
 
-const hintShowFree = (e) =>{
-    let hint = createTagWithClass("div", "hint_free")
+const selectAllItems = (e) => {
+    let checkboxes = document.getElementsByName("item-checkbox");
 
-    if(e.querySelector(".hint_free")){
-        return
+    for (let i = 0; i <= checkboxes.length - 1; i++) {
+        checkboxes[i].checked = e.checked;
+        checkboxes[i].dispatchEvent(new Event('change'))
+    }
+};
+
+const hideAbsenceBtn = document.getElementById("hideAbsenceItems")
+const headerAbsenceList = document.getElementById("headerAbsenceList")
+const absenceItemList = document.getElementById("absenceItemList")
+const absenceLine = document.getElementById("absenceLine")
+const absenceItemCounter = document.getElementById("absenceItemCounter")
+
+const hideAbsenceItem = (e) =>{
+    absenceItemList.classList.toggle("hide")
+    absenceLine.classList.toggle("hide")
+    headerAbsenceList.classList.toggle("items_hidden")
+    e.classList.toggle("items_hidden")
+}
+
+const checkBoxItemChange = () =>{
+    console.log("jopa")
+}
+
+//=============================>Кнопки удаления
+const findParent = (elem, classParent) =>{
+    if(elem.parentElement.classList.contains(classParent)){
+        return elem.parentElement
     }
 
-    hint.textContent = "Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно"
-
-    e.appendChild(hint)
+    return findParent(elem.parentElement, classParent)
 }
 
-const hintHideFree = (e) =>{
-    let hint = e.querySelector(".hint_free")
-    e.removeChild(hint)
+const deletePointAddress = (e, classParent) => {
+    let parent = findParent(e, classParent)
+
+    if(pointAddressList.querySelectorAll(".choose_address").length == 1){
+        e.disabled = true
+        return
+    }
+    parent.parentNode.removeChild(parent)
 }
 
+const deletePersonalAddress = (e, classParent) => {
+    let parent = findParent(e, classParent)
 
+    if(personalAddressList.querySelectorAll(".choose_address").length == 1){
+        e.disabled = true
+        return
+    }
+    parent.parentNode.removeChild(parent)
+}
 
+const deleteItem = (e, classParent) =>{
+    let parent = findParent(e, classParent)
+    parent.parentNode.removeChild(parent)
 
+    let itemsCounter = Number(absenceItemCounter.textContent) - 1
+    absenceItemCounter.textContent = itemsCounter
+    
+    if(itemsCounter == 0){
+        absenceLine.parentNode.removeChild(absenceLine)
+        headerAbsenceList.parentNode.removeChild(headerAbsenceList)
+    }
+}

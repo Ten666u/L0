@@ -43,14 +43,14 @@
                 <div class="basket_form-line"></div>
                 <div class="basket_items-list">
                 </div>
-                <div class="absence_item-header">
+                <div class="absence_item-header" id="headerAbsenceList">
                     <div class="basket_buttons-items">
-                        <span class="absence_item-quantity">Отсутствуют · 3 товара</span>
-                        <button class="basket_hide-items"></button>
+                        <span class="absence_item-quantity">Отсутствуют · <span id="absenceItemCounter">3</span> товара</span>
+                        <button class="basket_hide-items" id="hideAbsenceBtn" onclick="hideAbsenceItem(this)"></button>
                     </div>
                 </div>
-                <div class="basket_form-line"></div>
-                <div class="absence_item-list"></div>
+                <div class="basket_form-line" id="absenceLine"></div>
+                <div class="absence_item-list" id="absenceItemList"></div>
             </div>
             <div class="basket_container-form">
                 <div class="basket_delivery-header">
@@ -93,7 +93,13 @@
                 <div class="return_shipping-container">
                     <div class="checkmark-icon"></div>
                     <span class="return_shipping-detail">
-                        Обратная доставка товаров на склад при отказе —<button class="return_shipping-focus" onfocus="hintShowFree(this)" onblur="hintHideFree(this)">бесплатно</button>
+                        Обратная доставка товаров на склад при отказе —
+                        <button class="return_shipping-focus">
+                            бесплатно
+                            <div class="hint_free">
+                                Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно
+                            </div>
+                        </button>
                     </span>
                 </div>
             </div>
@@ -172,7 +178,13 @@
             <div class="order_shipping-container">
                 <div class="checkmark-icon order_checkmark-icon"></div>
                 <span class="return_shipping-detail">
-                    Обратная доставка товаров на склад при отказе —<button class="return_shipping-focus order_return-focus" onfocus="hintShowFree(this)" onblur="hintHideFree(this)">бесплатно</button>
+                    Обратная доставка товаров на склад при отказе —
+                    <button class="return_shipping-focus order_return-focus">
+                        бесплатно
+                        <div class="hint_free">
+                            Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно
+                        </div>
+                    </button>
                 </span>
             </div>
             <div class="order_payment">
