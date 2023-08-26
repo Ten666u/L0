@@ -11,7 +11,7 @@ let arrayItems = [
         storageAddress: "ул. Ленинская Слобода, 26, стр. 3, Москва этаж 3",
         newPrice: 522,
         oldPrice: 1051,
-        left: 2,
+        left: [2],
         discount: 300,
         persentDiscount: 55
     },
@@ -26,7 +26,7 @@ let arrayItems = [
         storageAddress: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
         newPrice: 10500,
         oldPrice: 11000,
-        left: 200,
+        left: [30, 15],
         discount: 300,
         persentDiscount: 55,
     },
@@ -40,7 +40,7 @@ let arrayItems = [
         storageAddress: "ул. Ленинская Слобода, 26, стр. 3, Москва этаж 3",
         newPrice: 247,
         oldPrice: 475,
-        left: 2,
+        left: [2],
         discount: 300,
         persentDiscount: 55,
     },
@@ -82,6 +82,8 @@ const pointArray = [
 //     }
 // ]
 
+const newPriceArray = []
+
 const createTagWithClass = (tagName, className) => {
     let tag = document.createElement(tagName);
 
@@ -115,9 +117,10 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
     );
 
     //Добавляем картинку
-    let picture = createTagWithClass("div", "basket_item-pic");
-    picture.style.background = "url(./styles/item_pic/" + obj.picture + ")";
-    itemInfo.append(picture);
+    let basketItemPic = createTagWithClass("div", "basket_item-pic");
+    let picture = "url(./styles/item_pic/" + obj.picture + ")";
+    basketItemPic.style.background = picture
+    itemInfo.append(basketItemPic);
 
     //Добавляем информацию по товару
     let itemDetail = createTagWithClass("div", "basket_item-info");
@@ -186,17 +189,17 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
                 <span class="font_count count_content">−</span>
             </button>
             <span class="item_quantity">1</span>
-            <button class="font_count count_plus">+</button>
+            <button class="font_count count_plus" onclick = "itemPlus(this)">+</button>
         </div>
         `
     );
     itemCounter.append(itemButtons);
 
-    if (obj.left < 3) {
+    if (obj.left[0] < 3) {
         itemButtons.insertAdjacentHTML(
             "beforeend",
             `
-            <span class="item_left">Осталось ${obj.left} шт.</span>
+            <span class="item_left">Осталось ${obj.left[0]} шт.</span>
             `
         );
     }
@@ -208,7 +211,7 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
             <button class="item_like" onClick = "changeColorBtn(this)">
                 <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
             </button>
-            <button class="item_delete" onclick="deleteItem(this, 'basket_item')">
+            <button class="item_delete" onclick="deleteBasketItem(this, 'basket_item')">
                 <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
             </button>
         </div>
@@ -219,9 +222,10 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
         "beforeend",
         `
         <div class="item_price-container" id = "priceContainer-${i}">
-            <span class="item_price-new" id = "itemPriceNew-${i}">${obj.newPrice}<span class="item_price-currency">сом</span></span>
+            <span class="item_price-new" id = "itemPriceNew-${i}">${obj.newPrice.toLocaleString()}</span>
+            <span class="item_price-currency">сом</span>
             <button class="item_price-old"  id = "itemPriceOld-${i}">
-                ${obj.oldPrice} сом
+                ${obj.oldPrice.toLocaleString()} сом
                 <div class="price_hint">
                     <div class="price_hint-txt">
                         <div>Скидка ${obj.persentDiscount}%</div>
@@ -241,6 +245,18 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
     item.append(itemCounter);
     //Добавляем элемент на страницу
     basket.append(item);
+
+    newPriceArray.push(obj.newPrice)
+
+    //Добавляем предмет в доставку
+    const deliveryItemPic = createTagWithClass("div", "delivery_item-pic")
+    const firstItemsArrival = document.getElementById("firstItemsArrival")
+    const deliveryItemList = firstItemsArrival.querySelector(".delivery_item-list")
+
+    deliveryItemPic.style.background = picture
+    deliveryItemPic.id = `deliveryItemPic${i}`
+
+    deliveryItemList.appendChild(deliveryItemPic)
 }
 
 const absenceBasket = document.querySelector(".absence_item-list");
@@ -313,7 +329,7 @@ for (let i = 0; i <= arrayItems.length - 1; i++) {
             <button class="item_like" onClick = "changeColorBtn(this)">
                 <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
             </button>
-            <button class="item_delete" onclick = "deleteItem(this, 'absence_item')">
+            <button class="item_delete" onclick = "deleteAbsenceItem(this, 'absence_item')">
                 <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
             </button>
         </div>
@@ -810,7 +826,12 @@ const deletePersonalAddress = (e, classParent) => {
     parent.parentNode.removeChild(parent)
 }
 
-const deleteItem = (e, classParent) =>{
+const deleteBasketItem = (e, classParent) =>{
+    let parent = findParent(e, classParent)
+    parent.parentNode.removeChild(parent)
+}
+
+const deleteAbsenceItem = (e, classParent) =>{
     let parent = findParent(e, classParent)
     parent.parentNode.removeChild(parent)
 
@@ -822,3 +843,49 @@ const deleteItem = (e, classParent) =>{
         headerAbsenceList.parentNode.removeChild(headerAbsenceList)
     }
 }
+
+//=============================>Реализация корзины
+
+
+const itemPlus = (e) =>{
+    const itemContainer = findParent(e, "basket_item")
+    const itemNumber = itemContainer.id.at(-1)
+    const itemQuantity = itemContainer.querySelector(".item_quantity")
+    const countMinus = itemContainer.querySelector(".count_minus")
+    const itemPriceNew = itemContainer.querySelector(".item_price-new")
+    const item = arrayItems[itemNumber]
+
+    if(countMinus.disabled == true){
+        countMinus.disabled = false
+    }
+
+    newPriceArray[itemNumber] += item.newPrice
+    itemQuantity.textContent = Number(itemQuantity.textContent) + 1
+    itemPriceNew.textContent = newPriceArray[itemNumber].toLocaleString()
+    
+    if(String(itemPriceNew.textContent).length > 6){
+        itemPriceNew.classList.add("big_price")
+    }
+
+    if(itemQuantity.textContent == item.left[0]){
+        e.disabled = true
+    }
+    console.log(newPriceArray)
+    countTotalPrice()
+}
+
+const totalPrice = document.getElementById("totalPrice")
+
+const countTotalPrice = () =>{
+   let total = newPriceArray.reduce((sum, value) => sum + value)
+   totalPrice.textContent = total.toLocaleString()
+
+   totalPrice.insertAdjacentHTML(
+    "beforeend",
+    `
+        <span class="total_detail-currency"> сом</span>
+    `
+);
+}
+
+countTotalPrice()

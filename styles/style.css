@@ -613,15 +613,21 @@ footer::before {
   font-weight: 700;
   line-height: 28px;
   letter-spacing: -0.01em;
-  display: block;
 }
-.item_price-new .item_price-currency {
+.item_price-new.big_price {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: right;
+}
+
+.item_price-currency {
   display: inline-block;
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
   letter-spacing: 0px;
-  margin-left: 4px;
 }
 
 .item_price-old {
@@ -774,7 +780,6 @@ footer::before {
   width: 40px;
   height: 56px;
   border-radius: 8px;
-  background: url("./item_pic/first_item.png");
   background-size: cover !important;
   background-repeat: no-repeat;
   color: white;
@@ -1759,13 +1764,12 @@ input:not(:placeholder-shown) + .floating-label {
     font-weight: 700;
     line-height: 24px;
   }
-  .item_price-new .item_price-currency {
+  .item_price-currency {
     display: inline-block;
     margin-left: 6px;
   }
   .item_price-old {
-    margin-left: 5px;
-    margin-bottom: 1px;
+    margin: 4px 0 1px 5px;
   }
   .basket_item-info {
     position: static;
