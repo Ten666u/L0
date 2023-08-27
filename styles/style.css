@@ -267,6 +267,15 @@ footer::before {
       -ms-flex-align: start;
           align-items: flex-start;
 }
+.basket_page.basket_empty {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 80vh;
+}
 
 .basket_form {
   -webkit-box-flex: 2.52;
@@ -1629,6 +1638,30 @@ input:not(:placeholder-shown) + .floating-label {
           animation: hint 1s forwards;
 }
 
+.basket_empty-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.basket_empty-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.basket_empty-container form .order_button {
+  width: 100%;
+}
+
 @media (max-width: 1000px) {
   body {
     min-width: 320px;
@@ -1695,6 +1728,18 @@ input:not(:placeholder-shown) + .floating-label {
   .basket_page {
     display: block;
     padding: 0;
+  }
+  .basket_page.basket_empty {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: 80vh;
   }
   .items_container {
     padding: 0 16px;

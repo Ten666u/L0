@@ -512,6 +512,14 @@ const renderDeliveryItems = () =>{
     renderDeliveryData()
 }
 
+const rerenderDetails = () =>{
+    renderDeliveryItems()
+    renderTotalQuantity()
+    countTotalPrice()
+    countTotalWithOutDiscount()
+    countDiscount()
+}
+
 const totalQuantity = document.getElementById("totalQuantity")
 const pcTotalQuantity = document.getElementById("pcTotalQuantity")
 const mobTotalQuantity = document.getElementById("mobTotalQuantity")
@@ -667,6 +675,8 @@ renderTotalQuantity()
 countTotalPrice()
 countTotalWithOutDiscount()
 countDiscount()
+
+//Рендер модальных окон
 renderPersonalAddressList()
 renderPointAddressList()
 
@@ -1112,9 +1122,7 @@ const checkBoxItemChange = (e) =>{
     let itemState = itemsState[itemNumber]
 
     itemState.choose = !itemState.choose
-    countTotalPrice()
-    renderTotalQuantity( )
-    renderDeliveryItems()
+    rerenderDetails()
 }
 
 //=============================>Кнопки удаления
@@ -1153,7 +1161,27 @@ const deleteBasketItem = (e, classParent) =>{
 
     itemContainer.parentNode.removeChild(itemContainer)
 
-    countTotalPrice()
+    if(basketItemsList.children.length == 0){
+        let basketPage = document.querySelector(".basket_page")
+        basketPage.classList.add("basket_empty")
+        basketPage.innerHTML = ''
+        basketPage.insertAdjacentHTML(
+            "beforeend",
+            `
+                <div class="basket_empty-container">
+                    <h2 class="basket_container-header">В корзине пока пусто</h2>
+                    <form action="https://www.wildberries.ru/">
+                        <button class="order_button">
+                            <span class="order_button-txt">
+                                Перейти на главную
+                            </span>
+                        </button>
+                    </form>
+                </div>
+            `
+        );
+    }
+    rerenderDetails()
 }
 
 const deleteAbsenceItem = (e, classParent) =>{
@@ -1179,6 +1207,7 @@ const itemPlus = (e) =>{
     const itemPriceNew = itemContainer.querySelector(".item_price-new")
     const itemPriceOld = itemContainer.querySelector(".item_price-old")
     const itemState = itemsState[itemNumber]
+    let obj = arrayItems[itemNumber]
 
     if(countMinus.disabled == true){
         countMinus.disabled = false
@@ -1190,6 +1219,23 @@ const itemPlus = (e) =>{
     
     itemPriceOld.textContent = countItemOldPrice(itemNumber).toLocaleString() + " сом"
 
+    itemPriceOld.insertAdjacentHTML(
+        "beforeend",
+        `
+            <div class="price_hint">
+                <div class="price_hint-txt">
+                    <div>Скидка ${obj.persentDiscount}%</div>
+                    <div>Скидка покупателя 10%</div>
+                </div>
+                <div class="price_hint-discount">
+                    <div>${obj.discount} сом</div>
+                    <div>−30 сом</div>
+                </div>
+            </div>
+        `
+    );
+
+
     if(String(itemPriceNew.textContent).length > 6){
         itemPriceNew.classList.add("big_price")
     }
@@ -1198,11 +1244,7 @@ const itemPlus = (e) =>{
         e.disabled = true
     }
 
-    countTotalPrice()
-    countTotalWithOutDiscount()
-    countDiscount()
-    renderTotalQuantity()
-    renderDeliveryItems()
+    rerenderDetails()
 }
 
 const itemMinus = (e) =>{
@@ -1232,11 +1274,7 @@ const itemMinus = (e) =>{
         e.disabled = true
     }
 
-    countTotalPrice()
-    countTotalWithOutDiscount()
-    countDiscount()
-    renderTotalQuantity()
-    renderDeliveryItems()
+    rerenderDetails()
 }
 
 
