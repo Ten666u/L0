@@ -223,9 +223,12 @@ h2 {
   height: 28px;
   margin: 1px 18px 8px 10px;
 }
+.pc_basket-icon.hide {
+  display: none;
+}
 
 .pc_basket-amount {
-  display: inline-block;
+  display: block;
   border-radius: 16px;
   background: rgb(245, 81, 35);
   min-width: 16px;
@@ -240,6 +243,7 @@ h2 {
   position: absolute;
   top: -4px;
   left: 32px;
+  padding: 0 4px;
 }
 
 footer {
@@ -285,6 +289,9 @@ footer::before {
           align-items: center;
   margin-bottom: 2px;
 }
+.custom-checkbox.hide {
+  display: none;
+}
 
 .wb-checkbox {
   -webkit-appearance: none;
@@ -322,6 +329,17 @@ footer::before {
   margin-bottom: 40px;
 }
 
+.items_hidden-txt {
+  display: none;
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.items_hidden-txt.not_hidden {
+  display: block;
+}
+
 .basket_hide-items {
   width: 20px;
   height: 20px;
@@ -343,6 +361,10 @@ footer::before {
   background: rgba(0, 0, 0, 0.1);
 }
 .basket_form-line.hide {
+  display: none;
+}
+
+.basket_items-list.hide {
   display: none;
 }
 
@@ -657,6 +679,9 @@ footer::before {
 }
 .absence_item-header.items_hidden {
   margin-bottom: 40px;
+}
+.absence_item-header.basket_hidden {
+  margin-top: 13px;
 }
 
 .absence_item-quantity {
@@ -1703,6 +1728,9 @@ input:not(:placeholder-shown) + .floating-label {
   .basket_form-line {
     display: none;
   }
+  .basket_form-line.basket_hidden {
+    display: block;
+  }
   .item_list-info {
     position: relative;
   }
@@ -1868,6 +1896,9 @@ input:not(:placeholder-shown) + .floating-label {
   }
   .absence_item-header {
     margin: 48px 0 16px 0;
+  }
+  .absence_item-header.items_hidden {
+    margin-bottom: 32px;
   }
   .basket_item .item_buttons.item_buttons-absence {
     margin: 0;
@@ -2037,7 +2068,7 @@ input:not(:placeholder-shown) + .floating-label {
     background: url("./images/nav-basket-mob.svg");
   }
   .mob_nav-container .mob_nav-elem.mob_nav-basket .mob_basket-amount {
-    display: inline-block;
+    display: block;
     border-radius: 16px;
     background: rgb(245, 81, 35);
     min-width: 16px;
@@ -2051,7 +2082,11 @@ input:not(:placeholder-shown) + .floating-label {
     vertical-align: middle;
     position: absolute;
     top: -4px;
-    right: -6px;
+    left: 18px;
+    padding: 0 4px;
+  }
+  .mob_nav-container .mob_nav-elem.mob_nav-basket .mob_basket-amount.hide {
+    display: none;
   }
   .mob_nav-container .mob_nav-elem.mob_nav-favor {
     background: url("./images/nav-favor-mob.svg");

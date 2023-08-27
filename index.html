@@ -24,7 +24,7 @@
                 <a class="nav_pc-basket">
                     <span class = 'pc_basket-icon'></span>
                     Корзина
-                    <span class = 'pc_basket-amount'>3</span>
+                    <span class = 'pc_basket-amount' id="pcTotalQuantity">3</span>
                     </a>
             </div>
         </div>
@@ -34,14 +34,15 @@
             <div class="items_container">
                 <h2 class="basket_container-header">Корзина</h2>
                 <div class="basket_buttons-items">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" class="wb-checkbox" onClick="selectAllItems(this)">
+                    <label class="custom-checkbox" id="selectAll">
+                        <input type="checkbox" class="wb-checkbox" onClick="selectAllItems(this)" checked>
                         <span class="checkbox_txt">Выбрать все</span>
                     </label>
-                    <button class="basket_hide-items"></button>
+                    <div class="items_hidden-txt" id="itemsHiddenTxt">266 товаров · 2 100 569 сом</div>
+                    <button class="basket_hide-items" id="hideBasketItemsBtn" onclick="hideBasketItems(this)"></button>
                 </div>
-                <div class="basket_form-line"></div>
-                <div class="basket_items-list">
+                <div class="basket_form-line" id="basketFormLine"></div>
+                <div class="basket_items-list" id="basketItemsList">
                 </div>
                 <div class="absence_item-header" id="headerAbsenceList">
                     <div class="basket_buttons-items">
@@ -76,18 +77,14 @@
                         Бесплатно
                     </span>
                 </div>
-                <div class="basket_delivery-section basket_delivery-item" id="firstItemsArrival">
-                    <span class="delivery_point-txt">5—6 февраля</span>
-                    <div class="delivery_item-list">
-                        <!-- <div class="delivery_item-pic"></div>
-                        <div class="delivery_item-pic"></div>
-                        <div class="delivery_item-pic"></div> -->
+                <div id="deliveryItemsList">
+                    <div class="basket_delivery-section basket_delivery-item" id="firstItemsArrival">
+                        <span class="delivery_point-txt">5—6 февраля</span>
+                        <div class="delivery_item-list"></div>
                     </div>
-                </div>
-                <div class="basket_delivery-section basket_delivery-item" id="secondItemsArrival">
-                    <span class="delivery_point-txt">7—8 февраля</span>
-                    <div class="delivery_item-list">
-                        <div class="delivery_item-pic"><span class = 'delivery_item-amount'>16</span></div>
+                    <div class="basket_delivery-section basket_delivery-item" id="secondItemsArrival">
+                        <span class="delivery_point-txt">7—8 февраля</span>
+                        <div class="delivery_item-list"></div>
                     </div>
                 </div>
                 <div class="return_shipping-container">
@@ -153,15 +150,15 @@
         <div class="basket_order">
             <div class="total_container">
                 <span class="order_total-txt">Итого</span>
-                <span class="order_total-amount" id="totalPrice">2 101 063<span class="order_total-currency"> сом</span></span>
+                <span class="order_total-amount" id="totalPrice"><span class="order_total-currency"> сом</span></span>
             </div>
             <div class="total_detail-container">
-                <span class="total_detail-txt">203 товара</span>
-                <span class="total_detail-txt">2 302 048<span class="total_detail-currency"> сом</span></span>
+                <span class="total_detail-txt" id="totalQuantity">0 товаров</span>
+                <span class="total_detail-txt" id="totalWithOutDiscount"><span class="total_detail-currency"> сом</span></span>
             </div>
             <div class="total_detail-container">
                 <span class="total_detail-txt">Скидка</span>
-                <span class="total_detail-txt">−200 985<span class="total_detail-currency"> сом</span></span>
+                <span class="total_detail-txt" id="discount">−200 985<span class="total_detail-currency"> сом</span></span>
             </div>
             <div class="total_detail-container">
                 <span class="total_detail-txt">Доставка</span>
@@ -173,7 +170,7 @@
                     <button class="pen_button" onClick = "openHideModal('deliveryModal')"></button>
                 </div>
                 <span class="order_delivery-point" id="orderAddress">Бишкек, улица Ахматбека Суюмбаева, 12/1</span>
-                <span class="order_delivery-data">5–8 фев</span>
+                <span class="order_delivery-data" id="deliveryData">5–8 фев</span>
             </div>
             <div class="order_shipping-container">
                 <div class="checkmark-icon order_checkmark-icon"></div>
@@ -223,7 +220,7 @@
     <div class="mob_nav-container">
         <a href="#" class="mob_nav-elem mob_nav-home"></a>
         <a href="#" class="mob_nav-elem mob_nav-search"></a>
-        <a href="#" class="mob_nav-elem mob_nav-basket"><span class = 'mob_basket-amount'>3</span></a>
+        <a href="#" class="mob_nav-elem mob_nav-basket"><span class = 'mob_basket-amount' id="mobTotalQuantity">3</span></a>
         <a href="#" class="mob_nav-elem mob_nav-favor"></a>
         <a href="#" class="mob_nav-elem mob_nav-profile"></a>
     </div>

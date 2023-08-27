@@ -25,8 +25,8 @@ let arrayItems = [
         ogrn: "5167746237148",
         storageAddress: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
         newPrice: 10500,
-        oldPrice: 11000,
-        left: [30, 15],
+        oldPrice: 11500,
+        left: [184, 50],
         discount: 300,
         persentDiscount: 55,
     },
@@ -76,6 +76,28 @@ const pointArray = [
     }
 ]
 
+const itemsState = [
+    {
+        quantity: 1,
+        newPrice: 522,
+        oldPrice: 1051,
+        choose: true
+    },
+    {
+        quantity: 200,
+        newPrice: 10500,
+        oldPrice: 11500,
+        choose: true
+    },
+    {
+        quantity: 2,
+        newPrice: 247,
+        oldPrice: 475,
+        choose: true
+    }
+]
+
+
 // let arrayCards = [
 //     {
 
@@ -94,306 +116,560 @@ const createTagWithClass = (tagName, className) => {
     return tag;
 };
 
-const basket = document.querySelector(".basket_items-list");
+const countQuantity  = () =>{
+    return itemsState.reduce((sum, elem) => {
+        if(elem.choose == true){
+            return sum + elem.quantity
+        }
+        return sum
+    }, 0)
+}
+
+const countItemPrice = (index) =>{
+    return itemsState[index].quantity * itemsState[index].newPrice
+}
+
+const countItemOldPrice = (index) =>{
+    return itemsState[index].quantity * itemsState[index].oldPrice
+}
+
+const basket = document.getElementById("basketItemsList")
 
 //Заполняем товары в корзине
-for (let i = 0; i <= arrayItems.length - 1; i++) {
-    let obj = arrayItems[i];
-
-    let item = createTagWithClass("div", "basket_item");
-    item.id = `item-${i}`
-    item.insertAdjacentHTML("beforeend", '<div class="item_list-info"></div>');
-
-    let itemInfo = item.querySelector(".item_list-info");
-
-    //Добавляем кнопку
-    itemInfo.insertAdjacentHTML(
-        "beforeend",
-        `<div class="item_choice-btn">
-            <label class="custom-checkbox">
-                <input type="checkbox" class="wb-checkbox" name="item-checkbox" onchange="checkBoxItemChange()">
-            </label>
-        </div>`
-    );
-
-    //Добавляем картинку
-    let basketItemPic = createTagWithClass("div", "basket_item-pic");
-    let picture = "url(./styles/item_pic/" + obj.picture + ")";
-    basketItemPic.style.background = picture
-    itemInfo.append(basketItemPic);
-
-    //Добавляем информацию по товару
-    let itemDetail = createTagWithClass("div", "basket_item-info");
-    itemDetail.insertAdjacentHTML(
-        "beforeend",
-        `
-        <a class="item_info-name" href=#>${obj.name}</a>
-    `
-    );
-
-    itemInfo.append(itemDetail);
-
-    let itemColorSize = createTagWithClass("div", "item_color_size");
-
-    if (obj.hasOwnProperty("color")) {
-        itemColorSize.insertAdjacentHTML(
+const renderBasketItem = () => {
+    for (let i = 0; i <= arrayItems.length - 1; i++) {
+        let obj = arrayItems[i];
+    
+        let item = createTagWithClass("div", "basket_item");
+        item.id = `item-${i}`
+        item.insertAdjacentHTML("beforeend", '<div class="item_list-info"></div>');
+    
+        let itemInfo = item.querySelector(".item_list-info");
+    
+        //Добавляем кнопку
+        itemInfo.insertAdjacentHTML(
+            "beforeend",
+            `<div class="item_choice-btn">
+                <label class="custom-checkbox">
+                    <input type="checkbox" class="wb-checkbox" name="item-checkbox" onchange="checkBoxItemChange(this)" checked>
+                </label>
+            </div>`
+        );
+    
+        //Добавляем картинку
+        let basketItemPic = createTagWithClass("div", "basket_item-pic");
+        let picture = "url(./styles/item_pic/" + obj.picture + ")";
+        basketItemPic.style.background = picture
+        itemInfo.append(basketItemPic);
+    
+        //Добавляем информацию по товару
+        let itemDetail = createTagWithClass("div", "basket_item-info");
+        itemDetail.insertAdjacentHTML(
             "beforeend",
             `
-            <span class="item_info-detail item_color">Цвет: ${obj.color}</span>
+            <a class="item_info-name" href=#>${obj.name}</a>
         `
         );
-    }
-
-    if (obj.hasOwnProperty("size")) {
-        itemColorSize.insertAdjacentHTML(
+    
+        itemInfo.append(itemDetail);
+    
+        let itemColorSize = createTagWithClass("div", "item_color_size");
+    
+        if (obj.hasOwnProperty("color")) {
+            itemColorSize.insertAdjacentHTML(
+                "beforeend",
+                `
+                <span class="item_info-detail item_color">Цвет: ${obj.color}</span>
+            `
+            );
+        }
+    
+        if (obj.hasOwnProperty("size")) {
+            itemColorSize.insertAdjacentHTML(
+                "beforeend",
+                `
+                <span class="item_info-detail item_size-txt">Размер:&ensp;</span><span class="item_info-detail item_size"> ${obj.size}</span>
+            `
+            );
+        }
+    
+        if (
+            itemColorSize.querySelector(".item_color") ||
+            itemColorSize.querySelector(".item_size")
+        ) {
+            itemDetail.append(itemColorSize);
+        }
+    
+        //Добавляем склад и продавца и подсказку
+        itemDetail.insertAdjacentHTML(
             "beforeend",
             `
-            <span class="item_info-detail item_size-txt">Размер:&ensp;</span><span class="item_info-detail item_size"> ${obj.size}</span>
-        `
+            <span class="item_info-detail item_info-owner">${obj.owner}</span>
+            <div class='item_storage-container'>
+                <span class="item_info-detail item_info-storage">${obj.storage}</span>
+                <button class="info_icon">
+                    <div class = "item_hint">
+                        <div class = "hint_storage">${obj.storageDoc}</div>
+                        <div class = "hint_txt">ОГРН: ${obj.ogrn}</div>
+                        <div class = "hint_txt">${obj.storageAddress}</div>
+                    </div>
+                </button>
+            </div>
+            `
         );
-    }
+    
+        let itemCounter = createTagWithClass("div", "item_list-counter");
+        let itemButtons = createTagWithClass("div", "item_buttons");
+        let itemState = itemsState[i]
+        let buttonPlusDisable = ""
+        
+        if(itemState.quantity == obj.left[0] && obj.left.length == 1){
+            buttonPlusDisable = "disabled"
+        }
+        
+        let buttonMinusDisable = ""
 
-    if (
-        itemColorSize.querySelector(".item_color") ||
-        itemColorSize.querySelector(".item_size")
-    ) {
-        itemDetail.append(itemColorSize);
-    }
+        if(itemState.quantity == 1){
+            buttonMinusDisable = "disabled"
+        } 
 
-    //Добавляем склад и продавца и подсказку
-    itemDetail.insertAdjacentHTML(
-        "beforeend",
-        `
-        <span class="item_info-detail item_info-owner">${obj.owner}</span>
-        <div class='item_storage-container'>
-            <span class="item_info-detail item_info-storage">${obj.storage}</span>
-            <button class="info_icon">
-                <div class = "item_hint">
-                    <div class = "hint_storage">${obj.storageDoc}</div>
-                    <div class = "hint_txt">ОГРН: ${obj.ogrn}</div>
-                    <div class = "hint_txt">${obj.storageAddress}</div>
-                </div>
-            </button>
-        </div>
-        `
-    );
-
-    let itemCounter = createTagWithClass("div", "item_list-counter");
-    let itemButtons = createTagWithClass("div", "item_buttons");
-
-    itemButtons.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="item_count">
-            <button class="count_minus" disabled>
-                <span class="font_count count_content">−</span>
-            </button>
-            <span class="item_quantity">1</span>
-            <button class="font_count count_plus" onclick = "itemPlus(this)">+</button>
-        </div>
-        `
-    );
-    itemCounter.append(itemButtons);
-
-    if (obj.left[0] < 3) {
         itemButtons.insertAdjacentHTML(
             "beforeend",
             `
-            <span class="item_left">Осталось ${obj.left[0]} шт.</span>
+            <div class="item_count">
+                <button class="count_minus" onclick = "itemMinus(this)" ${buttonMinusDisable}>
+                    <span class="font_count count_content">−</span>
+                </button>
+                <span class="item_quantity">${itemState.quantity}</span>
+                <button class="font_count count_plus" onclick = "itemPlus(this)" ${buttonPlusDisable}>+</button>
+            </div>
             `
         );
+        itemCounter.append(itemButtons);
+    
+        if (obj.left[0] < 3) {
+            itemButtons.insertAdjacentHTML(
+                "beforeend",
+                `
+                <span class="item_left">Осталось ${obj.left[0]} шт.</span>
+                `
+            );
+        }
+    
+        itemButtons.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="item_like-delete">
+                <button class="item_like" onClick = "changeColorBtn(this)">
+                    <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
+                </button>
+                <button class="item_delete" onclick="deleteBasketItem(this, 'basket_item')">
+                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                </button>
+            </div>
+            `
+        );
+        
+        let countPrice = countItemPrice(i).toLocaleString()
+        
+        let classPrice = 'item_price-new'
+
+        if(countPrice.length > 6){
+            classPrice = "item_price-new big_price"
+        }
+
+        itemCounter.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="item_price-container" id = "priceContainer-${i}">
+                <span class="${classPrice}" id = "itemPriceNew-${i}">${countItemPrice(i).toLocaleString()}</span>
+                <span class="item_price-currency">сом</span>
+                <button class="item_price-old"  id = "itemPriceOld-${i}">
+                    ${countItemOldPrice(i).toLocaleString()} сом
+                    <div class="price_hint">
+                        <div class="price_hint-txt">
+                            <div>Скидка ${obj.persentDiscount}%</div>
+                            <div>Скидка покупателя 10%</div>
+                        </div>
+                        <div class="price_hint-discount">
+                            <div>${obj.discount} сом</div>
+                            <div>−30 сом</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            `
+        );
+    
+        //Добавляем правый блок товара
+        item.append(itemCounter);
+        //Добавляем элемент на страницу
+        basket.append(item);
+    
+        newPriceArray.push(obj.newPrice)
     }
-
-    itemButtons.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="item_like-delete">
-            <button class="item_like" onClick = "changeColorBtn(this)">
-                <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
-            </button>
-            <button class="item_delete" onclick="deleteBasketItem(this, 'basket_item')">
-                <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
-            </button>
-        </div>
-        `
-    );
-
-    itemCounter.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="item_price-container" id = "priceContainer-${i}">
-            <span class="item_price-new" id = "itemPriceNew-${i}">${obj.newPrice.toLocaleString()}</span>
-            <span class="item_price-currency">сом</span>
-            <button class="item_price-old"  id = "itemPriceOld-${i}">
-                ${obj.oldPrice.toLocaleString()} сом
-                <div class="price_hint">
-                    <div class="price_hint-txt">
-                        <div>Скидка ${obj.persentDiscount}%</div>
-                        <div>Скидка покупателя 10%</div>
-                    </div>
-                    <div class="price_hint-discount">
-                        <div>${obj.discount} сом</div>
-                        <div>−30 сом</div>
-                    </div>
-                </div>
-            </button>
-        </div>
-        `
-    );
-
-    //Добавляем правый блок товара
-    item.append(itemCounter);
-    //Добавляем элемент на страницу
-    basket.append(item);
-
-    newPriceArray.push(obj.newPrice)
-
-    //Добавляем предмет в доставку
-    const deliveryItemPic = createTagWithClass("div", "delivery_item-pic")
-    const firstItemsArrival = document.getElementById("firstItemsArrival")
-    const deliveryItemList = firstItemsArrival.querySelector(".delivery_item-list")
-
-    deliveryItemPic.style.background = picture
-    deliveryItemPic.id = `deliveryItemPic${i}`
-
-    deliveryItemList.appendChild(deliveryItemPic)
 }
 
 const absenceBasket = document.querySelector(".absence_item-list");
 
 // Заполняем отсутствующие товары
-for (let i = 0; i <= arrayItems.length - 1; i++) {
-    let obj = arrayItems[i];
-
-    let item = createTagWithClass("div", "basket_item");
-    item.classList.add("absence_item");
-    item.insertAdjacentHTML("beforeend", '<div class="item_list-info"></div>');
-
-    let itemInfo = item.querySelector(".item_list-info");
-
-    //Добавляем картинку
-    let picture = createTagWithClass("div", "basket_item-pic");
-    picture.classList.add("absence_item-pic");
-    picture.style.background = "url(./styles/item_pic/" + obj.picture + ")";
-    itemInfo.append(picture);
-
-    //Добавляем информацию по товару
-    let itemDetail = createTagWithClass("div", "basket_item-info");
-    itemDetail.classList.add("absence_item-info");
-    itemDetail.insertAdjacentHTML(
-        "beforeend",
+const renderAbsentItem = () =>{
+    for (let i = 0; i <= arrayItems.length - 1; i++) {
+        let obj = arrayItems[i];
+    
+        let item = createTagWithClass("div", "basket_item");
+        item.classList.add("absence_item");
+        item.insertAdjacentHTML("beforeend", '<div class="item_list-info"></div>');
+    
+        let itemInfo = item.querySelector(".item_list-info");
+    
+        //Добавляем картинку
+        let picture = createTagWithClass("div", "basket_item-pic");
+        picture.classList.add("absence_item-pic");
+        picture.style.background = "url(./styles/item_pic/" + obj.picture + ")";
+        itemInfo.append(picture);
+    
+        //Добавляем информацию по товару
+        let itemDetail = createTagWithClass("div", "basket_item-info");
+        itemDetail.classList.add("absence_item-info");
+        itemDetail.insertAdjacentHTML(
+            "beforeend",
+            `
+            <a class="item_info-name absence_txt " href=#>${obj.name}</a>
         `
-        <a class="item_info-name absence_txt " href=#>${obj.name}</a>
+        );
+    
+        itemInfo.append(itemDetail);
+    
+        let itemColorSize = createTagWithClass("div", "item_color_size");
+    
+        if (obj.hasOwnProperty("color")) {
+            itemColorSize.insertAdjacentHTML(
+                "beforeend",
+                `
+                <span class="item_info-detail item_color absence_txt">Цвет: ${obj.color}</span>
+            `
+            );
+        }
+    
+        if (obj.hasOwnProperty("size")) {
+            itemColorSize.insertAdjacentHTML(
+                "beforeend",
+                `
+                <span class="item_info-detail item_size-txt absence_txt">Размер:&ensp;</span><span class="item_info-detail item_size absence_txt"> ${obj.size}</span>
+            `//
+            );
+        }
+    
+        if (
+            itemColorSize.querySelector(".item_color") ||
+            itemColorSize.querySelector(".item_size")
+        ) {
+            itemDetail.append(itemColorSize);
+        }
+    
+        let itemCounter = createTagWithClass("div", "item_list-counter");
+        let itemButtons = createTagWithClass("div", "item_buttons");
+        itemButtons.classList.add("item_buttons-absence");
+    
+        itemCounter.append(itemButtons);
+    
+        itemButtons.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="item_like-delete">
+                <button class="item_like" onClick = "changeColorBtn(this)">
+                    <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
+                </button>
+                <button class="item_delete" onclick = "deleteAbsenceItem(this, 'absence_item')">
+                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                </button>
+            </div>
+            `
+        );
+    
+        //Добавляем правый блок товара
+        item.append(itemCounter);
+        //Добавляем элемент на страницу
+        absenceBasket.append(item);
+    }
+    
+}
+
+const deliveryItemsList = document.getElementById("deliveryItemsList")
+const deliveryData = document.getElementById("deliveryData")
+
+const checkItems = () =>{
+    for(item of itemsState){
+        if(item.choose){
+            return true
+        }
+    }
+    return false
+}
+const renderDeliveryItems = () =>{
+    deliveryItemsList.innerHTML = ""
+    let itemChoose = checkItems()
+
+    let secondDelivery = false
+
+    if(itemChoose){
+        deliveryItemsList.insertAdjacentHTML(
+            "beforeend",
+            `
+                <div class="basket_delivery-section basket_delivery-item" id="delivery5-7">
+                    <span class="delivery_point-txt">5—6 февраля</span>
+                    <div class="delivery_item-list"></div>
+                </div>
+            `
+        );
+
+        const deliveryItems = deliveryItemsList.querySelector(".delivery_item-list")
+
+        for(let i = 0; i <= itemsState.length - 1; i++){
+            let item = itemsState[i]
+            let obj = arrayItems[i]
+
+            if(item.choose == true){
+                let deliveryItemPic = createTagWithClass("div", "delivery_item-pic")
+                let picture = "url(./styles/item_pic/" + arrayItems[i].picture + ")";
+                deliveryItemPic.style.background = picture
+
+                let itemAmount = createTagWithClass("div", "delivery_item-amount")
+                
+                if(item.quantity > 1){
+
+                    if(item.quantity <= obj.left[0]){
+                        itemAmount.textContent = item.quantity
+                        deliveryItemPic.appendChild(itemAmount)
+                    }
+                    else{
+                        secondDelivery = true
+                        itemAmount.textContent = obj.left[0]
+                        deliveryItemPic.appendChild(itemAmount)
+                    }
+                }
+                
+                deliveryItems.appendChild(deliveryItemPic)
+            }
+        }
+    }
+
+    if(secondDelivery){
+        deliveryItemsList.insertAdjacentHTML(
+            "beforeend",
+            `
+                <div class="basket_delivery-section basket_delivery-item">
+                    <span class="delivery_point-txt">7—8 февраля</span>
+                    <div class="delivery_item-list"></div>
+                </div>
+            `
+        );
+
+        deliveryItems = deliveryItemsList.querySelectorAll(".delivery_item-list")
+        deliveryItems = deliveryItems[deliveryItems.length - 1]
+
+        for(let i = 0; i <= itemsState.length - 1; i++){
+            let item = itemsState[i]
+            let obj = arrayItems[i]
+            if(arrayItems[i].left.length > 1){
+                let deliveryItemPic = createTagWithClass("div", "delivery_item-pic")
+                let picture = "url(./styles/item_pic/" + arrayItems[i].picture + ")";
+                deliveryItemPic.style.background = picture
+                let amount = item.quantity - obj.left[0]
+
+                let itemAmount = createTagWithClass("div", "delivery_item-amount")
+
+                if(amount > 1){
+
+                    if(amount <= obj.left[1]){
+                        itemAmount.textContent = amount
+                        deliveryItemPic.appendChild(itemAmount)
+                    }
+                    else{
+                        itemAmount.textContent = obj.left[1]
+                        deliveryItemPic.appendChild(itemAmount)
+                    }
+                }
+                
+                deliveryItems.appendChild(deliveryItemPic)
+            }
+        }
+    }
+
+    const renderDeliveryData = () =>{
+        if(deliveryItemsList.children.length == 2){
+            deliveryData.textContent = "5-8 фев."
+        }
+        else if(deliveryItemsList.children.length == 1){
+            deliveryData.textContent = "5-6 фев."
+        }
+        else{
+            deliveryData.textContent = ""
+        }
+    }
+    
+    renderDeliveryData()
+}
+
+const totalQuantity = document.getElementById("totalQuantity")
+const pcTotalQuantity = document.getElementById("pcTotalQuantity")
+const mobTotalQuantity = document.getElementById("mobTotalQuantity")
+
+const renderTotalQuantity = () =>{
+    let quantity = countQuantity()
+
+    if(quantity % 2){
+        totalQuantity.textContent = `${quantity} товара`
+    }
+    else if(quantity == 0){
+        totalQuantity.textContent = `${quantity} товаров`
+    }
+    else{
+        totalQuantity.textContent = `${quantity} товар`
+    }
+
+    pcTotalQuantity.textContent = quantity
+    mobTotalQuantity.textContent = quantity
+
+    if(quantity == 0){
+        pcTotalQuantity.classList.add("hide")
+        mobTotalQuantity.classList.add("hide")
+    }
+    else if(quantity != 0 && pcTotalQuantity.classList.contains("hide")&& mobTotalQuantity.classList.contains("hide")){
+        pcTotalQuantity.classList.remove("hide")
+        mobTotalQuantity.classList.remove("hide")
+    }
+}
+
+const totalPrice = document.getElementById("totalPrice")
+
+const countTotalPrice = () =>{
+   let total = itemsState.reduce((sum, elem) => {
+    if(elem.choose == true){
+        return sum += elem.newPrice * elem.quantity
+    }
+    return sum
+}, 0) 
+   totalPrice.textContent = total.toLocaleString()
+
+   totalPrice.insertAdjacentHTML(
+    "beforeend",
+    `
+        <span class="total_detail-currency"> сом</span>
     `
     );
+}
 
-    itemInfo.append(itemDetail);
+const totalWithOutDiscount = document.getElementById("totalWithOutDiscount")
 
-    let itemColorSize = createTagWithClass("div", "item_color_size");
+const countTotalWithOutDiscount = () =>{
+    let totalNotDiscount = itemsState.reduce((sum, elem) => {
+        if(elem.choose == true){
+            return sum += elem.oldPrice * elem.quantity
+        }
+        return sum
+    }, 0)
 
-    if (obj.hasOwnProperty("color")) {
-        itemColorSize.insertAdjacentHTML(
-            "beforeend",
-            `
-            <span class="item_info-detail item_color absence_txt">Цвет: ${obj.color}</span>
-        `
-        );
-    }
+    totalWithOutDiscount.textContent = totalNotDiscount.toLocaleString()
 
-    if (obj.hasOwnProperty("size")) {
-        itemColorSize.insertAdjacentHTML(
-            "beforeend",
-            `
-            <span class="item_info-detail item_size-txt absence_txt">Размер:&ensp;</span><span class="item_info-detail item_size absence_txt"> ${obj.size}</span>
-        `//
-        );
-    }
-
-    if (
-        itemColorSize.querySelector(".item_color") ||
-        itemColorSize.querySelector(".item_size")
-    ) {
-        itemDetail.append(itemColorSize);
-    }
-
-    let itemCounter = createTagWithClass("div", "item_list-counter");
-    let itemButtons = createTagWithClass("div", "item_buttons");
-    itemButtons.classList.add("item_buttons-absence");
-
-    itemCounter.append(itemButtons);
-
-    itemButtons.insertAdjacentHTML(
+    totalWithOutDiscount.insertAdjacentHTML(
         "beforeend",
         `
-        <div class="item_like-delete">
-            <button class="item_like" onClick = "changeColorBtn(this)">
-                <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
-            </button>
-            <button class="item_delete" onclick = "deleteAbsenceItem(this, 'absence_item')">
-                <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
-            </button>
-        </div>
+            <span class="total_detail-currency"> сом</span>
         `
     );
+}
 
-    //Добавляем правый блок товара
-    item.append(itemCounter);
-    //Добавляем элемент на страницу
-    absenceBasket.append(item);
+const discount = document.getElementById("discount")
+
+const countDiscount = () =>{
+    let totalDiscount = itemsState.reduce((sum, elem) => {
+        if(elem.choose == true){
+            return sum += elem.oldPrice * elem.quantity - elem.newPrice * elem.quantity
+        }
+        return sum
+    }, 0)
+
+    discount.textContent = totalDiscount.toLocaleString()
+
+    discount.insertAdjacentHTML(
+        "beforeend",
+        `
+            <span class="total_detail-currency"> сом</span>
+        `
+    );
 }
 
 const personalAddressList = document.getElementById("personalAddressList")
+    
+const renderPersonalAddressList = () =>{
+    for(let i = 0; i <= personalArray.length - 1; i++){
+        let addressObj = personalArray[i]
+        let checked = ""
 
-for(let i = 0; i <= personalArray.length - 1; i++){
-    let addressObj = personalArray[i]
-    let checked = ""
+        i == 0 ? checked = "checked" : checked = ""
 
-    i == 0 ? checked = "checked" : checked = ""
-
-    personalAddressList.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="choose_address">
-            <input type="radio" value="${i}" name="address-personal" id="personalAddress${i}" class="wb-radio" ${checked}/>
-            <label for="personalAddress${i}">
-                <span class="label_txt">${addressObj.address}</span>
-            </label>
-            <button class="item_delete" onclick="deletePersonalAddress(this, 'choose_address')">
-                <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
-            </button>
-        </div>
-        `
-    );
+        personalAddressList.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="choose_address">
+                <input type="radio" value="${i}" name="address-personal" id="personalAddress${i}" class="wb-radio" ${checked}/>
+                <label for="personalAddress${i}">
+                    <span class="label_txt">${addressObj.address}</span>
+                </label>
+                <button class="item_delete" onclick="deletePersonalAddress(this, 'choose_address')">
+                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                </button>
+            </div>
+            `
+        );
+    }
 }
 
 const pointAddressList = document.getElementById("pointAddressList")
 
-for(let i = 0; i <= pointArray.length - 1; i++){
-    let addressObj = pointArray[i]
-    let checked = ""
-
-    i == 0 ? checked = "checked" : checked = ""
-
-    pointAddressList.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="choose_address">
-            <input type="radio" value="${i}" name="address-point" id="pointAddress${i}" class="wb-radio" ${checked}/>
-            <label for="pointAddress${i}">
-                <span class="label_txt">${addressObj.address}</span>
-                <div class="delivery_point-detail">
-                    <span class="rating_picture"></span>
-                    <span class="point_detail-txt">${addressObj.rating}</span>
-                    <span class="point_detail-txt absence">Пункт выдачи</span>
-                </div>
-            </label>
-            <button class="item_delete" onclick="deletePointAddress(this, 'choose_address')">
-                <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
-            </button>
-        </div>
-        `
-    );
+const renderPointAddressList = () =>{
+    for(let i = 0; i <= pointArray.length - 1; i++){
+        let addressObj = pointArray[i]
+        let checked = ""
+    
+        i == 0 ? checked = "checked" : checked = ""
+    
+        pointAddressList.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="choose_address">
+                <input type="radio" value="${i}" name="address-point" id="pointAddress${i}" class="wb-radio" ${checked}/>
+                <label for="pointAddress${i}">
+                    <span class="label_txt">${addressObj.address}</span>
+                    <div class="delivery_point-detail">
+                        <span class="rating_picture"></span>
+                        <span class="point_detail-txt">${addressObj.rating}</span>
+                        <span class="point_detail-txt absence">Пункт выдачи</span>
+                    </div>
+                </label>
+                <button class="item_delete" onclick="deletePointAddress(this, 'choose_address')">
+                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                </button>
+            </div>
+            `
+        );
+    }
 }
+
+
+//=========================================> Рендер страницы
+renderBasketItem()
+renderAbsentItem()
+renderDeliveryItems()
+renderTotalQuantity()
+countTotalPrice()
+countTotalWithOutDiscount()
+countDiscount()
+renderPersonalAddressList()
+renderPointAddressList()
+
 
 const selectPayImmediately = (e) => {
     const payDetailBasket = document.getElementById("payDetailBasket");
@@ -411,6 +687,7 @@ const selectPayImmediately = (e) => {
     }
 };
 
+//=======================================> Медиа-Запрос для телефонов
 const mobileWidth = window.matchMedia("(max-width: 1000px)");
 
 function printLog(isMobileSize) {
@@ -547,7 +824,6 @@ const chooseAddress = () =>{
         orderDeliveryType.textContent = "Доставка курьером"
     }
 
-    console.log(objAddress)
     basketAddress.textContent = orderAddress.textContent = objAddress.address
     openHideModal('deliveryModal')
 }
@@ -775,16 +1051,53 @@ const selectAllItems = (e) => {
     let checkboxes = document.getElementsByName("item-checkbox");
 
     for (let i = 0; i <= checkboxes.length - 1; i++) {
-        checkboxes[i].checked = e.checked;
-        checkboxes[i].dispatchEvent(new Event('change'))
+        if(checkboxes[i].checked != e.checked){
+            checkboxes[i].checked = e.checked
+            checkboxes[i].dispatchEvent(new Event('change'))
+        }
     }
 };
 
+const hideBasketItemsBtn = document.getElementById("hideBasketItemsBtn")
 const hideAbsenceBtn = document.getElementById("hideAbsenceItems")
 const headerAbsenceList = document.getElementById("headerAbsenceList")
 const absenceItemList = document.getElementById("absenceItemList")
 const absenceLine = document.getElementById("absenceLine")
 const absenceItemCounter = document.getElementById("absenceItemCounter")
+const basketFormLine = document.getElementById("basketFormLine")
+const selectAll = document.getElementById("selectAll")
+const itemsHiddenTxt = document.getElementById("itemsHiddenTxt")
+
+const hideBasketItems = (e) =>{
+    basketItemsList.classList.toggle("hide")
+    headerAbsenceList.classList.toggle("basket_hidden")
+    selectAll.classList.toggle("hide")
+    itemsHiddenTxt.classList.toggle("not_hidden")
+    e.classList.toggle("items_hidden")
+    basketFormLine.classList.toggle("basket_hidden")
+
+    let quantity = countQuantity()
+    let sum = itemsState.reduce((sum, elem) =>{
+        if(elem.choose == true){
+            sum += elem.newPrice * elem.quantity
+        }
+        return sum
+    }, 0)
+
+    let quantityStr = ""
+
+    if(quantity % 2){
+        quantityStr = `${quantity} товара`
+    }
+    else if(quantity == 0){
+        quantityStr= `${quantity} товаров`
+    }
+    else{
+        quantityStr = `${quantity} товар`
+    }
+
+    itemsHiddenTxt.textContent = quantityStr + " · " + sum.toLocaleString() + " сом"
+}
 
 const hideAbsenceItem = (e) =>{
     absenceItemList.classList.toggle("hide")
@@ -793,8 +1106,15 @@ const hideAbsenceItem = (e) =>{
     e.classList.toggle("items_hidden")
 }
 
-const checkBoxItemChange = () =>{
-    console.log("jopa")
+const checkBoxItemChange = (e) =>{
+    let itemContainer = findParent(e, "basket_item")
+    let itemNumber = itemContainer.id.at(-1)
+    let itemState = itemsState[itemNumber]
+
+    itemState.choose = !itemState.choose
+    countTotalPrice()
+    renderTotalQuantity( )
+    renderDeliveryItems()
 }
 
 //=============================>Кнопки удаления
@@ -827,13 +1147,19 @@ const deletePersonalAddress = (e, classParent) => {
 }
 
 const deleteBasketItem = (e, classParent) =>{
-    let parent = findParent(e, classParent)
-    parent.parentNode.removeChild(parent)
+    let itemContainer = findParent(e, classParent)
+    let itemNumber = itemContainer.id.at(-1)
+    itemsState[itemNumber].choose = false
+
+    itemContainer.parentNode.removeChild(itemContainer)
+
+    countTotalPrice()
 }
 
 const deleteAbsenceItem = (e, classParent) =>{
-    let parent = findParent(e, classParent)
-    parent.parentNode.removeChild(parent)
+    let itemContainer = findParent(e, classParent)
+    itemContainer.parentNode.removeChild(itemContainer)
+    
 
     let itemsCounter = Number(absenceItemCounter.textContent) - 1
     absenceItemCounter.textContent = itemsCounter
@@ -845,47 +1171,75 @@ const deleteAbsenceItem = (e, classParent) =>{
 }
 
 //=============================>Реализация корзины
-
-
 const itemPlus = (e) =>{
     const itemContainer = findParent(e, "basket_item")
     const itemNumber = itemContainer.id.at(-1)
     const itemQuantity = itemContainer.querySelector(".item_quantity")
     const countMinus = itemContainer.querySelector(".count_minus")
     const itemPriceNew = itemContainer.querySelector(".item_price-new")
-    const item = arrayItems[itemNumber]
+    const itemPriceOld = itemContainer.querySelector(".item_price-old")
+    const itemState = itemsState[itemNumber]
 
     if(countMinus.disabled == true){
         countMinus.disabled = false
     }
 
-    newPriceArray[itemNumber] += item.newPrice
-    itemQuantity.textContent = Number(itemQuantity.textContent) + 1
-    itemPriceNew.textContent = newPriceArray[itemNumber].toLocaleString()
+    itemState.quantity++
+    itemQuantity.textContent = itemState.quantity
+    itemPriceNew.textContent = countItemPrice(itemNumber).toLocaleString()
     
+    itemPriceOld.textContent = countItemOldPrice(itemNumber).toLocaleString() + " сом"
+
     if(String(itemPriceNew.textContent).length > 6){
         itemPriceNew.classList.add("big_price")
     }
 
-    if(itemQuantity.textContent == item.left[0]){
+    if(itemState.quantity == arrayItems[itemNumber].left[0]){
         e.disabled = true
     }
-    console.log(newPriceArray)
+
     countTotalPrice()
+    countTotalWithOutDiscount()
+    countDiscount()
+    renderTotalQuantity()
+    renderDeliveryItems()
 }
 
-const totalPrice = document.getElementById("totalPrice")
+const itemMinus = (e) =>{
+    const itemContainer = findParent(e, "basket_item")
+    const itemNumber = itemContainer.id.at(-1)
+    const itemQuantity = itemContainer.querySelector(".item_quantity")
+    const countPlus = itemContainer.querySelector(".count_plus")
+    const itemPriceNew = itemContainer.querySelector(".item_price-new")
+    const itemPriceOld = itemContainer.querySelector(".item_price-old")
+    const itemState = itemsState[itemNumber]
 
-const countTotalPrice = () =>{
-   let total = newPriceArray.reduce((sum, value) => sum + value)
-   totalPrice.textContent = total.toLocaleString()
+    if(countPlus.disabled == true){
+        countPlus.disabled = false
+    }
 
-   totalPrice.insertAdjacentHTML(
-    "beforeend",
-    `
-        <span class="total_detail-currency"> сом</span>
-    `
-);
+    itemState.quantity--
+    itemQuantity.textContent = itemState.quantity
+    itemPriceNew.textContent = countItemPrice(itemNumber).toLocaleString()
+
+    itemPriceOld.textContent = countItemOldPrice(itemNumber).toLocaleString() + " сом"
+    
+    if(String(itemPriceNew.textContent).length <= 6){
+        itemPriceNew.classList.remove("big_price")
+    }
+
+    if(itemState.quantity == 1){
+        e.disabled = true
+    }
+
+    countTotalPrice()
+    countTotalWithOutDiscount()
+    countDiscount()
+    renderTotalQuantity()
+    renderDeliveryItems()
 }
 
-countTotalPrice()
+
+
+
+
