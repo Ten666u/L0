@@ -1254,7 +1254,11 @@ const itemPlus = (e) =>{
         itemPriceNew.classList.add("big_price")
     }
 
-    if(itemState.quantity == arrayItems[itemNumber].left[0]){
+    let limitQuantity =  arrayItems[itemNumber].left.reduce((sum, elem) =>{
+        return sum += elem
+    }, 0)
+
+    if(itemState.quantity == limitQuantity){
         e.disabled = true
     }
 
