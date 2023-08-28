@@ -410,7 +410,7 @@ footer::before {
   color: rgb(151, 151, 175);
 }
 .basket_item .basket_item-info.absence_item-info {
-  width: auto;
+  width: 309px;
 }
 .basket_item .item_buttons.item_buttons-absence {
   margin-right: 126px;
@@ -1844,8 +1844,11 @@ input:not(:placeholder-shown) + .floating-label {
   .item_price-old {
     margin: 4px 0 1px 5px;
   }
-  .basket_item-info {
+  .basket_item .basket_item-info {
     position: static;
+    width: auto;
+  }
+  .basket_item .basket_item-info.absence_item-info {
     width: auto;
   }
   .item_info-name {
