@@ -527,14 +527,21 @@ const mobTotalQuantity = document.getElementById("mobTotalQuantity")
 const renderTotalQuantity = () =>{
     let quantity = countQuantity()
 
-    if(quantity % 2){
-        totalQuantity.textContent = `${quantity} товара`
-    }
-    else if(quantity == 0){
+    let n = Math.abs(quantity) % 100
+
+    if (n >= 5 && n <= 20) {
         totalQuantity.textContent = `${quantity} товаров`
     }
-    else{
+
+    n %= 10
+    if (n === 1) {
         totalQuantity.textContent = `${quantity} товар`
+    }
+    else if (n >= 2 && n <= 4) {
+        totalQuantity.textContent = `${quantity} товара`
+    }
+    else {
+        totalQuantity.textContent = `${quantity} товаров`
     }
 
     pcTotalQuantity.textContent = quantity
@@ -1096,14 +1103,21 @@ const hideBasketItems = (e) =>{
 
     let quantityStr = ""
 
-    if(quantity % 2){
-        quantityStr = `${quantity} товара`
+    let n = Math.abs(quantity) % 100
+
+    if (n >= 5 && n <= 20) {
+        quantityStr  = `${quantity} товаров`
     }
-    else if(quantity == 0){
-        quantityStr= `${quantity} товаров`
-    }
-    else{
+
+    n %= 10
+    if (n === 1) {
         quantityStr = `${quantity} товар`
+    }
+    else if (n >= 2 && n <= 4) {
+        quantityStr  = `${quantity} товара`
+    }
+    else {
+        quantityStr  = `${quantity} товаров`
     }
 
     itemsHiddenTxt.textContent = quantityStr + " · " + sum.toLocaleString() + " сом"
@@ -1276,8 +1290,3 @@ const itemMinus = (e) =>{
 
     rerenderDetails()
 }
-
-
-
-
-
