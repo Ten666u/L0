@@ -606,7 +606,7 @@ const countDiscount = () =>{
         return sum
     }, 0)
 
-    discount.textContent = totalDiscount.toLocaleString()
+    discount.textContent = "−" + totalDiscount.toLocaleString()
 
     discount.insertAdjacentHTML(
         "beforeend",
