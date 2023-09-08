@@ -12,10 +12,10 @@ function loadPosts() {
     //! объявляем функцию загрузки постов
 
     const loadImg = (obj) => {
-        if (obj.attachments[0]["type"] == "photo") {
+        if (obj.attachments[0]?.type  == "photo") {
             return `<img class="post_img" src=${obj.attachments[0]["photo"].sizes[4].url}></img>`;
         }
-        if (obj.attachments[0]["type"] == "video") {
+        if (obj.attachments[0]?.type == "video") {
             return `<img class="post_img" src=${obj.attachments[0]["video"]["image"][3].url}></img>`;
         }
         return `<div></div>`;
