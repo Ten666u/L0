@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Товары и точка</title>
-    <link rel="stylesheet" href="./styles/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
 <body>
     <header>
@@ -29,69 +29,155 @@
             </div>
         </div>
     </header>
-    <div class="basket_page">
-        <div class="basket_form">
-            <div class="items_container">
-                <h2 class="basket_container-header">Корзина</h2>
-                <div class="basket_buttons-items">
-                    <label class="custom-checkbox" id="selectAll">
-                        <input type="checkbox" class="wb-checkbox" onClick="selectAllItems(this)" checked>
-                        <span class="checkbox_txt">Выбрать все</span>
-                    </label>
-                    <div class="items_hidden-txt" id="itemsHiddenTxt">266 товаров · 2 100 569 сом</div>
-                    <button class="basket_hide-items" id="hideBasketItemsBtn" onclick="hideBasketItems(this)"></button>
-                </div>
-                <div class="basket_form-line" id="basketFormLine"></div>
-                <div class="basket_items-list" id="basketItemsList">
-                </div>
-                <div class="absence_item-header" id="headerAbsenceList">
+    <div class="basket_container">
+        <div class="basket_page">
+            <div class="basket_form">
+                <div class="items_container">
+                    <h2 class="basket_container-header">Корзина</h2>
                     <div class="basket_buttons-items">
-                        <span class="absence_item-quantity">Отсутствуют · <span id="absenceItemCounter">3</span> товара</span>
-                        <button class="basket_hide-items" id="hideAbsenceBtn" onclick="hideAbsenceItem(this)"></button>
+                        <label class="custom-checkbox" id="selectAll">
+                            <input type="checkbox" class="wb-checkbox" onClick="selectAllItems(this)" checked>
+                            <span class="checkbox_txt">Выбрать все</span>
+                        </label>
+                        <div class="items_hidden-txt" id="itemsHiddenTxt">266 товаров · 2 100 569 сом</div>
+                        <button class="basket_hide-items" id="hideBasketItemsBtn" onclick="hideBasketItems(this)"></button>
+                    </div>
+                    <div class="basket_form-line" id="basketFormLine"></div>
+                    <div class="basket_items-list" id="basketItemsList">
+                    </div>
+                    <div class="absence_item-header" id="headerAbsenceList">
+                        <div class="basket_buttons-items">
+                            <span class="absence_item-quantity">Отсутствуют · <span id="absenceItemCounter">3</span> товара</span>
+                            <button class="basket_hide-items" id="hideAbsenceBtn" onclick="hideAbsenceItem(this)"></button>
+                        </div>
+                    </div>
+                    <div class="basket_form-line" id="absenceLine"></div>
+                    <div class="absence_item-list" id="absenceItemList"></div>
+                </div>
+                <div class="basket_container-form">
+                    <div class="basket_delivery-header">
+                        <span class="delivery_header-txt">Способ доставки</span>
+                        <button class="header_button-switch" onClick = "openHideModal('deliveryModal')">Изменить</button>
+                    </div>
+                    <div class="basket_delivery-section">
+                        <span class="delivery_point-txt" id="basketDeliveryType">Пункт выдачи</span>
+                        <div class="delivery_point-container">
+                            <span class="delivery_point" id="basketAddress">
+                                Бишкек, улица Ахматбека Суюмбаева, 12/1
+                            </span>
+                            <div class="delivery_point-detail" id="basketPointDetail">
+                                <span class="rating_picture"></span>
+                                <span class="point_detail-txt" id="pointRating">4.99</span>
+                                <span class="point_detail-txt" id="basketPointTime">Ежедневно с 10 до 21</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basket_delivery-section">
+                        <span class="delivery_point-txt delivery_shipping-cost">Стоимость доставки</span>
+                        <span class="delivery_point">
+                            Бесплатно
+                        </span>
+                    </div>
+                    <div id="deliveryItemsList">
+                        <div class="basket_delivery-section basket_delivery-item" id="firstItemsArrival">
+                            <span class="delivery_point-txt">5—6 февраля</span>
+                            <div class="delivery_item-list"></div>
+                        </div>
+                        <div class="basket_delivery-section basket_delivery-item" id="secondItemsArrival">
+                            <span class="delivery_point-txt">7—8 февраля</span>
+                            <div class="delivery_item-list"></div>
+                        </div>
+                    </div>
+                    <div class="return_shipping-container">
+                        <div class="checkmark-icon"></div>
+                        <span class="return_shipping-detail">
+                            Обратная доставка товаров на склад при отказе —
+                            <button class="return_shipping-focus">
+                                бесплатно
+                                <div class="hint_free">
+                                    Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно
+                                </div>
+                            </button>
+                        </span>
                     </div>
                 </div>
-                <div class="basket_form-line" id="absenceLine"></div>
-                <div class="absence_item-list" id="absenceItemList"></div>
-            </div>
-            <div class="basket_container-form">
-                <div class="basket_delivery-header">
-                    <span class="delivery_header-txt">Способ доставки</span>
-                    <button class="header_button-switch" onClick = "openHideModal('deliveryModal')">Изменить</button>
+                <div class="basket_container-form">
+                    <div class="basket_delivery-header">
+                        <span class="delivery_header-txt">Способ оплаты</span>
+                        <button class="header_button-switch" onClick="openHideModal('cardModal')">Изменить</button>
+                    </div>
+                    <div class="basket_card-container">
+                        <div class="basket_card-icon mir_card-icon" id="basketCard"></div>
+                        <span class="basket_card-number">1234 56•• •••• 1234</span>
+                        <span class="basket_card-data">01/30</span>
+                    </div>
+                    <div class="basket_card-pay" id = "payDetailBasket">Спишем оплату с карты при получении</div>
                 </div>
-                <div class="basket_delivery-section">
-                    <span class="delivery_point-txt" id="basketDeliveryType">Пункт выдачи</span>
-                    <div class="delivery_point-container">
-                        <span class="delivery_point" id="basketAddress">
-                            Бишкек, улица Ахматбека Суюмбаева, 12/1
-                        </span>
-                        <div class="delivery_point-detail" id="basketPointDetail">
-                            <span class="rating_picture"></span>
-                            <span class="point_detail-txt" id="pointRating">4.99</span>
-                            <span class="point_detail-txt" id="basketPointTime">Ежедневно с 10 до 21</span>
+                <div class="basket_container-form">
+                    <div class="basket_delivery-header" id="personalFormAnchor">
+                        <span class="delivery_header-txt">Получатель</span>
+                    </div>
+                    <div class="basket_name-form" >
+                        <div class="first_name-container">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputFirstName" onblur="checkFirstName(this)" oninput="checkInputFirstName(this)">
+                            <span class="floating-label">Имя</span>
+                            <span class="error_message" id="errorFirstName"></span>
+                        </div>
+                        <div class="second_name-container">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputSecondName" onblur="checkSecondName(this)" oninput="checkInputSecondName(this)">
+                            <span class="floating-label">Фамилия</span>
+                            <span class="error_message" id="errorSecondName"></span>
+                        </div>
+                    </div>
+                    <div class="basket_doc-form">
+                        <div class="mail_container">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputEmail" onblur="checkEmail(this)" oninput="checkInputEmail(this)">
+                            <span class="floating-label" id="floatingLabelMail">Почта</span>
+                            <span class="error_message" id="errorEmail"></span>
+                        </div>
+                        <div class="phone_number-container">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" maxlength="30" id="inputPhone" oninput="checkInputPhone(this)" onblur = "checkPhone(this)">
+                            <span class="floating-label">Телефон</span>
+                            <span class="error_message" id="errorPhone"></span>
+                        </div>
+                        <div class="INN_container">
+                            <input class="basket_form-input" id="inputINN" maxlength="14" type="text" placeholder="&ensp;"  oninput="checkInputINN(this)" onblur="checkINN(this)"/>
+                            <span class="floating-label">ИНН</span>
+                            <span class="error_message not_error" id = "errorINN">Для таможенного оформления</span>
                         </div>
                     </div>
                 </div>
-                <div class="basket_delivery-section">
-                    <span class="delivery_point-txt delivery_shipping-cost">Стоимость доставки</span>
-                    <span class="delivery_point">
-                        Бесплатно
-                    </span>
+            </div>
+            <div class="basket_order">
+                <div class="total_container">
+                    <span class="order_total-txt">Итого</span>
+                    <span class="order_total-amount" id="totalPrice"><span class="order_total-currency"> сом</span></span>
                 </div>
-                <div id="deliveryItemsList">
-                    <div class="basket_delivery-section basket_delivery-item" id="firstItemsArrival">
-                        <span class="delivery_point-txt">5—6 февраля</span>
-                        <div class="delivery_item-list"></div>
-                    </div>
-                    <div class="basket_delivery-section basket_delivery-item" id="secondItemsArrival">
-                        <span class="delivery_point-txt">7—8 февраля</span>
-                        <div class="delivery_item-list"></div>
-                    </div>
+                <div class="total_detail-container">
+                    <span class="total_detail-txt" id="totalQuantity">0 товаров</span>
+                    <span class="total_detail-txt" id="totalWithOutDiscount"><span class="total_detail-currency"> сом</span></span>
                 </div>
-                <div class="return_shipping-container">
-                    <div class="checkmark-icon"></div>
+                <div class="total_detail-container">
+                    <span class="total_detail-txt">Скидка</span>
+                    <span class="total_detail-txt" id="discount">−200 985<span class="total_detail-currency"> сом</span></span>
+                </div>
+                <div class="total_detail-container">
+                    <span class="total_detail-txt">Доставка</span>
+                    <span class="total_detail-txt">Бесплатно</span>
+                </div>
+                <div class="order_delivery">
+                    <div class="order_header-btn">
+                        <h4 class="order_header-txt" id="orderDeliveryType">Доставка в пункт выдачи</h4>
+                        <button class="pen_button" onClick = "openHideModal('deliveryModal')"></button>
+                    </div>
+                    <span class="order_delivery-point" id="orderAddress">Бишкек, улица Ахматбека Суюмбаева, 12/1</span>
+                    <span class="order_delivery-data" id="deliveryData">5–8 фев</span>
+                </div>
+                <div class="order_shipping-container">
+                    <div class="checkmark-icon order_checkmark-icon"></div>
                     <span class="return_shipping-detail">
                         Обратная доставка товаров на склад при отказе —
-                        <button class="return_shipping-focus">
+                        <button class="return_shipping-focus order_return-focus">
                             бесплатно
                             <div class="hint_free">
                                 Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно
@@ -99,116 +185,32 @@
                         </button>
                     </span>
                 </div>
-            </div>
-            <div class="basket_container-form">
-                <div class="basket_delivery-header">
-                    <span class="delivery_header-txt">Способ оплаты</span>
-                    <button class="header_button-switch" onClick="openHideModal('cardModal')">Изменить</button>
-                </div>
-                <div class="basket_card-container">
-                    <div class="basket_card-icon mir_card-icon" id="basketCard"></div>
-                    <span class="basket_card-number">1234 56•• •••• 1234</span>
-                    <span class="basket_card-data">01/30</span>
-                </div>
-                <div class="basket_card-pay" id = "payDetailBasket">Спишем оплату с карты при получении</div>
-            </div>
-            <div class="basket_container-form">
-                <div class="basket_delivery-header" id="personalFormAnchor">
-                    <span class="delivery_header-txt">Получатель</span>
-                </div>
-                <div class="basket_name-form" >
-                    <div class="first_name-container">
-                        <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputFirstName" onblur="checkFirstName(this)" oninput="checkInputFirstName(this)">
-                        <span class="floating-label">Имя</span>
-                        <span class="error_message" id="errorFirstName"></span>
+                <div class="order_payment">
+                    <div class="order_header-btn">
+                        <h4 class="order_header-txt">Оплата картой</h4>
+                        <button class="pen_button" onClick = "openHideModal('cardModal')"></button>
                     </div>
-                    <div class="second_name-container">
-                        <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputSecondName" onblur="checkSecondName(this)" oninput="checkInputSecondName(this)">
-                        <span class="floating-label">Фамилия</span>
-                        <span class="error_message" id="errorSecondName"></span>
+                    <div class="order_card-container">
+                        <div class="basket_card-icon mir_card-icon" id="orderCard"></div>
+                        <span class="order_card-number">1234 56•• •••• 1234</span>
                     </div>
                 </div>
-                <div class="basket_doc-form">
-                    <div class="mail_container">
-                        <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputEmail" onblur="checkEmail(this)" oninput="checkInputEmail(this)">
-                        <span class="floating-label" id="floatingLabelMail">Почта</span>
-                        <span class="error_message" id="errorEmail"></span>
-                    </div>
-                    <div class="phone_number-container">
-                        <input type="text" class="basket_form-input" placeholder="&ensp;" maxlength="30" id="inputPhone" oninput="checkInputPhone(this)" onblur = "checkPhone(this)">
-                        <span class="floating-label">Телефон</span>
-                        <span class="error_message" id="errorPhone"></span>
-                    </div>
-                    <div class="INN_container">
-                        <input class="basket_form-input" id="inputINN" maxlength="14" type="text" placeholder="&ensp;"  oninput="checkInputINN(this)" onblur="checkINN(this)"/>
-                        <span class="floating-label">ИНН</span>
-                        <span class="error_message not_error" id = "errorINN">Для таможенного оформления</span>
-                    </div>
+                <div class="order_pay-container">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="wb-checkbox" onClick="selectPayImmediately(this)">
+                        <span class="order_checkbox-txt">Списать оплату сразу</span>
+                    </label>
+                    <div class="basket_card-pay order_card-pay" id = "payDetailOrder">Спишем оплату с карты при получении</div>
                 </div>
-            </div>
-        </div>
-        <div class="basket_order">
-            <div class="total_container">
-                <span class="order_total-txt">Итого</span>
-                <span class="order_total-amount" id="totalPrice"><span class="order_total-currency"> сом</span></span>
-            </div>
-            <div class="total_detail-container">
-                <span class="total_detail-txt" id="totalQuantity">0 товаров</span>
-                <span class="total_detail-txt" id="totalWithOutDiscount"><span class="total_detail-currency"> сом</span></span>
-            </div>
-            <div class="total_detail-container">
-                <span class="total_detail-txt">Скидка</span>
-                <span class="total_detail-txt" id="discount">−200 985<span class="total_detail-currency"> сом</span></span>
-            </div>
-            <div class="total_detail-container">
-                <span class="total_detail-txt">Доставка</span>
-                <span class="total_detail-txt">Бесплатно</span>
-            </div>
-            <div class="order_delivery">
-                <div class="order_header-btn">
-                    <h4 class="order_header-txt" id="orderDeliveryType">Доставка в пункт выдачи</h4>
-                    <button class="pen_button" onClick = "openHideModal('deliveryModal')"></button>
+                <button class="order_button" onClick="orderAllInput()" id="orderButton">
+                    <span class="order_button-txt" id="orderButtonTxt">
+                        Заказать
+                    </span>
+                </button>
+                <div class="terms_use-container">
+                    <div class="consent_icon"></div>
+                    <span class="terms_use-txt">Соглашаюсь <span class="terms_use-focus">с правилами пользования торговой площадкой</span> и <span class="terms_use-focus">возврата</span></span>
                 </div>
-                <span class="order_delivery-point" id="orderAddress">Бишкек, улица Ахматбека Суюмбаева, 12/1</span>
-                <span class="order_delivery-data" id="deliveryData">5–8 фев</span>
-            </div>
-            <div class="order_shipping-container">
-                <div class="checkmark-icon order_checkmark-icon"></div>
-                <span class="return_shipping-detail">
-                    Обратная доставка товаров на склад при отказе —
-                    <button class="return_shipping-focus order_return-focus">
-                        бесплатно
-                        <div class="hint_free">
-                            Если товары вам не подойдут, мы вернем их обратно на склад — это бесплатно
-                        </div>
-                    </button>
-                </span>
-            </div>
-            <div class="order_payment">
-                <div class="order_header-btn">
-                    <h4 class="order_header-txt">Оплата картой</h4>
-                    <button class="pen_button" onClick = "openHideModal('cardModal')"></button>
-                </div>
-                <div class="order_card-container">
-                    <div class="basket_card-icon mir_card-icon" id="orderCard"></div>
-                    <span class="order_card-number">1234 56•• •••• 1234</span>
-                </div>
-            </div>
-            <div class="order_pay-container">
-                <label class="custom-checkbox">
-                    <input type="checkbox" class="wb-checkbox" onClick="selectPayImmediately(this)">
-                    <span class="order_checkbox-txt">Списать оплату сразу</span>
-                </label>
-                <div class="basket_card-pay order_card-pay" id = "payDetailOrder">Спишем оплату с карты при получении</div>
-            </div>
-            <button class="order_button" onClick="orderAllInput()" id="orderButton">
-                <span class="order_button-txt" id="orderButtonTxt">
-                    Заказать
-                </span>
-            </button>
-            <div class="terms_use-container">
-                <div class="consent_icon"></div>
-                <span class="terms_use-txt">Соглашаюсь <span class="terms_use-focus">с правилами пользования торговой площадкой</span> и <span class="terms_use-focus">возврата</span></span>
             </div>
         </div>
     </div>

@@ -1,0 +1,80 @@
+@font-face
+    font-family: "Segoe UI"
+    src: url("../fonts/segoeuil.ttf") format("truetype")
+    font-weight: 200
+
+@font-face
+    font-family: "Segoe UI"
+    src: url("../fonts/segoeuisl.ttf") format("truetype")
+    font-weight: 300
+
+@font-face
+    font-family: "Segoe UI"
+    src: url("../fonts/segoeui.ttf") format("truetype")
+    font-weight: 400
+
+@font-face
+    font-family: "Segoe UI"
+    src: url("../fonts/segoeuisb.ttf") format("truetype")
+    font-weight: 600
+
+@font-face
+    font-family: "Segoe UI"
+    src: url("../fonts/segoeuib.ttf") format("truetype")
+    font-weight: 700
+
+body
+    font-family: Segoe UI
+
+button
+    background: none
+    border: none
+    padding: 0
+    color: black
+
+a
+    text-decoration: none
+    color: white
+
+    &:hover
+        cursor: pointer
+        color: white
+
+.hideAddress
+    display: none
+
+.hide
+    display: none
+
+.basket_empty-container
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+    form
+        display: flex
+        justify-content: center
+
+        .order_button
+            width: 100%
+
+
+@media (max-width: 1000px)
+    body
+        min-width: 320px
+
+//Стили PC
+@import _header
+@import _basket
+@import _basketForm
+@import _footer
+@import _order
+@import _modal
+
+//Стили Mobile
+@import _header-mob
+@import _basket-mob
+@import _basketForm-mob
+@import _order-mob
+@import _footer-mob
+@import _modal-mob

@@ -158,7 +158,7 @@ const renderBasketItem = () => {
     
         //Добавляем картинку
         let basketItemPic = createTagWithClass("div", "basket_item-pic");
-        let picture = "url(./styles/item_pic/" + obj.picture + ")";
+        let picture = "url(./assets/item_pic/" + obj.picture + ")";
         basketItemPic.style.background = picture
         itemInfo.append(basketItemPic);
     
@@ -261,10 +261,10 @@ const renderBasketItem = () => {
             `
             <div class="item_like-delete">
                 <button class="item_like" onClick = "changeColorBtn(this)">
-                    <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
+                    <img src="./assets/styles/images/like-icon.svg" alt="" class="item_like-icon">
                 </button>
                 <button class="item_delete" onclick="deleteBasketItem(this, 'basket_item')">
-                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
@@ -326,7 +326,7 @@ const renderAbsentItem = () =>{
         //Добавляем картинку
         let picture = createTagWithClass("div", "basket_item-pic");
         picture.classList.add("absence_item-pic");
-        picture.style.background = "url(./styles/item_pic/" + obj.picture + ")";
+        picture.style.background = "url(./assets/item_pic/" + obj.picture + ")";
         itemInfo.append(picture);
     
         //Добавляем информацию по товару
@@ -379,10 +379,10 @@ const renderAbsentItem = () =>{
             `
             <div class="item_like-delete">
                 <button class="item_like" onClick = "changeColorBtn(this)">
-                    <img src="./styles/images/like-icon.svg" alt="" class="item_like-icon">
+                    <img src="./assets/styles/images/like-icon.svg" alt="" class="item_like-icon">
                 </button>
                 <button class="item_delete" onclick = "deleteAbsenceItem(this, 'absence_item')">
-                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
@@ -432,7 +432,7 @@ const renderDeliveryItems = () =>{
 
             if(item.choose == true){
                 let deliveryItemPic = createTagWithClass("div", "delivery_item-pic")
-                let picture = "url(./styles/item_pic/" + arrayItems[i].picture + ")";
+                let picture = "url(./assets/item_pic/" + arrayItems[i].picture + ")";
                 deliveryItemPic.style.background = picture
 
                 let itemAmount = createTagWithClass("div", "delivery_item-amount")
@@ -466,7 +466,7 @@ const renderDeliveryItems = () =>{
             `
         );
 
-        deliveryItems = deliveryItemsList.querySelectorAll(".delivery_item-list")
+        let deliveryItems = deliveryItemsList.querySelectorAll(".delivery_item-list")
         deliveryItems = deliveryItems[deliveryItems.length - 1]
 
         for(let i = 0; i <= itemsState.length - 1; i++){
@@ -474,7 +474,7 @@ const renderDeliveryItems = () =>{
             let obj = arrayItems[i]
             if(arrayItems[i].left.length > 1){
                 let deliveryItemPic = createTagWithClass("div", "delivery_item-pic")
-                let picture = "url(./styles/item_pic/" + arrayItems[i].picture + ")";
+                let picture = "url(./assets/item_pic/" + arrayItems[i].picture + ")";
                 deliveryItemPic.style.background = picture
                 let amount = item.quantity - obj.left[0]
 
@@ -499,10 +499,10 @@ const renderDeliveryItems = () =>{
 
     const renderDeliveryData = () =>{
         if(deliveryItemsList.children.length == 2){
-            deliveryData.textContent = "5-8 фев."
+            deliveryData.textContent = "5–8 фев."
         }
         else if(deliveryItemsList.children.length == 1){
-            deliveryData.textContent = "5-6 фев."
+            deliveryData.textContent = "5–6 фев."
         }
         else{
             deliveryData.textContent = ""
@@ -571,7 +571,7 @@ const countTotalPrice = () =>{
    totalPrice.insertAdjacentHTML(
     "beforeend",
     `
-        <span class="total_detail-currency"> сом</span>
+        <span class="order_total-currency"> сом</span>
     `
     );
 }
@@ -634,7 +634,7 @@ const renderPersonalAddressList = () =>{
                     <span class="label_txt">${addressObj.address}</span>
                 </label>
                 <button class="item_delete" onclick="deletePersonalAddress(this, 'choose_address')">
-                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
@@ -665,7 +665,7 @@ const renderPointAddressList = () =>{
                     </div>
                 </label>
                 <button class="item_delete" onclick="deletePointAddress(this, 'choose_address')">
-                    <img src="./styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
@@ -869,6 +869,8 @@ const checkINN = (e, btnPressed = false) =>{
 
         return
     }
+
+    return true
 }
 
 const checkInputINN = (e) =>{
@@ -950,6 +952,8 @@ const checkPhone = (e, btnPressed = false) =>{
         e.classList.add("invalid")
         return
     }
+
+    return true
 }
 
 const checkFirstName = (e, btnPressed = false) =>{
@@ -960,10 +964,13 @@ const checkFirstName = (e, btnPressed = false) =>{
         error.textContent = "Укажите имя"
         e.classList.add("invalid")
     }
+
     if(nameStr && !btnPressed){
         error.textContent = ""
         e.classList.remove("invalid")
     }
+
+    return true
 }
 
 const checkInputFirstName = (e) =>{
@@ -985,11 +992,14 @@ const checkSecondName = (e, btnPressed = false) =>{
         e.classList.add("invalid")
         return
     }
+    
     if(secondNameStr && !btnPressed){
         error.textContent = ""
         e.classList.remove("invalid")
         return
     }
+
+    return true
 }
 
 const checkInputSecondName = (e) =>{
@@ -1019,16 +1029,20 @@ const checkEmail = (e, btnPressed = false) =>{
         e.classList.add("invalid")
         return
     }
+
     if(!email && !btnPressed){
         error.textContent = ""
         e.classList.remove("invalid")
         return
     }
+
     if(!emailValid && !btnPressed){
         error.textContent = "Проверьте адрес электронной почты"
         e.classList.add("invalid")
         return
     }
+
+    return true
 }
 
 const checkInputEmail = (e) =>{
@@ -1051,19 +1065,15 @@ const orderAllInput = () =>{
     let email = document.getElementById("inputEmail")
     let personalFormAnchor = document.getElementById("personalFormAnchor")
 
-    checkINN(INN, true)
-    checkPhone(phone, true)
-    checkFirstName(firstName, true)
-    checkSecondName(secondName, true)
-    checkEmail(email, true)
 
-    if(mobileWidth.matches){
+    let scrollFlag = checkINN(INN, true) & checkEmail(email, true) & checkSecondName(secondName, true) & checkFirstName(firstName, true) & checkPhone(phone, true)
+
+    if(!scrollFlag){
         personalFormAnchor.scrollIntoView({ behavior: "smooth", inline: "nearest" });
     }
 }
 
 //=============================>
-
 const selectAllItems = (e) => {
     let checkboxes = document.getElementsByName("item-checkbox");
 

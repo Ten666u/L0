@@ -1,0 +1,220 @@
+@media (max-width: 1000px)
+    .basket_container
+        display: block
+
+    .basket_page
+        display: block
+        padding: 0
+        &.basket_empty
+            display: flex
+            align-items: center
+            justify-content: center
+            height: 80vh
+    
+    .items_container
+        padding: 0 16px
+
+    .basket_form
+        margin: 0
+    
+    h2
+        font-size: 20px
+        font-weight: 700
+        line-height: 10px
+        letter-spacing: -0.01em
+
+    .basket_container-header
+        margin: -1px 0 26px 0
+
+    .basket_buttons-items
+        margin-bottom: 15px
+
+    .basket_hide-items
+        margin: 1px 4px 0 0
+
+    .checkbox_txt
+        margin-top: -2px    
+    
+    .basket_form-line
+        display: none
+        &.basket_hidden
+            display: block
+
+    .item_list-info
+        position: relative
+
+    .item_choice-btn
+        position: absolute
+        top: 4px
+        left: 4px
+        margin: 0
+
+        .wb-checkbox
+            -webkit-appearance: none
+            width: 22px
+            height: 22px
+            border: 1px solid rgba(0, 0, 0, 0.2)
+            border-radius: 6px
+            background: white
+
+            &:checked
+                border: none
+                background: none
+                background-image: url('./images/checkbox.svg')
+                background-repeat: no-repeat
+
+    .basket_item
+        display: block
+        border-top: 1px solid rgba(0, 0, 0, 0.1)
+        margin-bottom: 15px
+
+        &:first-child
+            .item_list-info
+                margin: 0
+                margin-top: 12px
+
+            .item_buttons
+                margin-top: 12px
+
+        &:first-of-type
+            margin-bottom: 16px
+
+        .item_list-info
+            margin: 0
+            margin-top: 11px       
+
+    .basket_item-pic
+        width: 80px
+        height: 106px
+        flex-shrink: 0
+
+    .item_price-container
+        display: flex
+        width: 100%
+        margin: 1px 0 0 0
+
+    .item_price-new, .item_price-currency
+        font-family: Segoe UI
+        font-size: 16px
+        font-weight: 700
+        line-height: 24px
+
+    .item_price-currency
+        display: inline-block
+        margin-left: 6px
+
+    .item_price-old
+        margin: 4px 0 1px 5px
+
+    .basket_item
+        .basket_item-info
+            position: static
+            width: auto
+
+            &.absence_item-info
+                width: auto
+
+    .item_info-name
+        margin-top: 2px
+        font-size: 14px
+        font-weight: 400
+        line-height: 20px
+        max-height: 40px
+        overflow: hidden
+        display: -webkit-box
+        -webkit-line-clamp: 2
+        -webkit-box-orient: vertical
+        text-overflow: ellipsis
+        white-space: initial
+
+    .item_size-txt
+        display: none
+
+    .item_size
+        position: absolute
+        top: 80px
+        left: 6px
+        display: block
+        height: 22px
+        max-width: 75px
+        padding: 0px 3.5px 2px 3.5px
+        border-radius: 6px
+        background: white
+        font-size: 14px
+        line-height: 20px
+        overflow: hidden
+        display: -webkit-box
+        -webkit-box-orient: vertical
+        text-overflow: ellipsis
+        white-space: initial
+
+    .item_storage-container
+        display: none
+        
+    .item_buttons
+        margin: 0
+        margin-top: 12px
+        flex: 1
+        display: flex
+        width: auto
+        align-items: center
+
+    .item_count
+        width: 80px
+        height: 32px
+        padding-bottom: 0
+
+    .count_minus
+        width: 24px
+        height: 32px
+        border-radius: 4px
+        margin: 0
+
+        .count_content
+            margin: 0.5px 5px 8px 8px
+            display: inline-block
+
+    .item_quantity
+        font-size: 14px
+        font-weight: 400
+        line-height: 20px
+
+    .count_plus
+        width: 24px
+        height: 32px
+        border-radius: 4px
+        margin: 0px
+        padding: 0 3px 6px 0px
+
+    .item_left
+        margin: 0
+        margin-left: 16px
+
+    .item_like-delete
+        margin: 0 12px 0 0
+        flex: 1
+
+    .item_like
+        margin-right: 24px
+
+    .absence_item-header
+        margin: 48px 0 16px 0
+        &.items_hidden
+            margin-bottom: 32px
+
+    .basket_item
+        .item_buttons.item_buttons-absence
+            margin: 0
+
+            .item_like-delete
+                margin: 15px 4px 0 0
+
+        &:first-child
+            .absence_item
+                margin-bottom: 16px
+
+        &.absence_item
+            margin-bottom: 17px
+    
+    .absence_item-list
+        margin: 0 0 35px 0

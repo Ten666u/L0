@@ -1,0 +1,146 @@
+.modal_background
+    position: fixed
+    overflow: auto
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    background-color: rgba(5, 0, 10, 0.3)
+    z-index: 1
+
+    &.hidden
+        display: none
+
+.modal_container
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    border-radius: 16px
+    background: white
+    display: flex
+    flex-direction: column
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2)
+
+    &.modal_cards
+        width: 400px
+        min-height: 408px
+
+    &.modal_delivery
+        width: 500px
+        min-height: 408px
+
+.modal_header
+    padding: 16px 20px 13px 24px
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+
+.modal_header-txt
+    font-size: 20px
+    font-weight: 700
+    line-height: 28px
+    letter-spacing: -0.01em
+
+.modal_header-close
+    width: 24px
+    height: 24px
+    background: url("./images/close-icon.svg") center no-repeat
+
+.modal_info-container
+    padding: 0 22px
+    flex: 1
+
+.choose_delivery-type
+    height: 36px
+    display: flex
+    column-gap: 8px
+    justify-content: space-between
+    margin: 0 0 24px
+
+.delivery_type-btn
+    display: flex
+    justify-content: center
+    flex: 1
+    height: 36px
+    border-radius: 20px
+    border: 2px solid rgba(203, 17, 171, 0.15)
+
+    &.type_btn-pressed
+        border: 2px solid rgba(203, 17, 171, 1)
+
+.delivery_type-txt
+    display: block
+    font-size: 13px
+    font-weight: 700
+    line-height: 16px
+    margin: 6px 0 0
+
+.wb-radio
+    -webkit-appearance: none
+    width: 20px
+    height: 20px
+    background: url('./images/wb-radio.svg') center no-repeat
+    cursor: pointer
+
+    &:checked
+        border: none
+        background: url('./images/wb-radio-checked.svg') center no-repeat
+
+.choose_card-container
+    display: flex
+    margin-bottom: 16px
+
+    input
+        margin: 3px 8px 0 0
+        height: 20px
+        width: 20px
+
+        &:hover
+            cursor: pointer
+
+    label
+        display: flex
+        cursor: pointer
+        user-select: none
+
+        .basket_card-icon
+            margin-right: 4px 
+
+.modal_button-container
+    padding: 16px 0 24px 24px
+
+.modal_info-header
+    font-size: 13px
+    font-weight: 700
+    line-height: 16px
+    padding: 2px 0 0 1px
+    margin: 0 0 8px
+
+.choose_address
+    display: flex
+    column-gap: 8px
+    margin: 0 0 8px
+    
+    input
+        margin: 9px 0 0
+
+    label
+        cursor: pointer
+        flex: 1
+        margin: 0 0 8px
+        user-select: none
+
+    .label_txt
+        display: block
+        font-size: 16px
+        font-weight: 400
+        line-height: 24px
+        margin: 4px 0 4px
+
+    .item_delete
+        margin: 8px 0 0
+        filter: brightness(0) saturate(100%) invert(69%) sepia(4%) saturate(1466%) hue-rotate(202deg) brightness(89%) contrast(86%)
+
+        &:hover
+            filter: brightness(0) saturate(100%) invert(40%) sepia(34%) saturate(5207%) hue-rotate(349deg) brightness(99%) contrast(94%)

@@ -1,0 +1,457 @@
+.basket_container
+    background: rgba(246, 246, 250, 1)
+    display: flex
+    justify-content: center
+
+.basket_page
+    padding: 0px 24px 10px 24px
+    display: flex
+    flex: 1
+    max-width: 1400px
+    align-items: flex-start
+    
+    &.basket_empty
+        align-items: center
+        justify-content: center
+        height: 80vh
+
+.basket_form
+    flex: 2.5
+    max-width: 891px
+    margin-right: 32px   
+
+.basket_container-header
+    margin-top: 10px
+    margin-bottom: 27px
+
+.custom-checkbox
+    display: flex
+    align-items: center
+    margin-bottom: 2px
+    &.hide
+        display: none
+
+.wb-checkbox
+    -webkit-appearance: none
+    width: 22px
+    height: 22px
+    border: 1px solid rgba(0, 0, 0, 0.2)
+    border-radius: 6px
+
+    &:checked
+        border: none
+        background-image: url('./images/checkbox.svg')
+        background-repeat: no-repeat
+
+.checkbox_txt
+    font-family: Segoe UI
+    font-size: 16px
+    font-weight: 400
+    line-height: 22px
+    letter-spacing: 0px
+    margin-left: 11px
+
+.basket_buttons-items
+    display: flex
+    justify-content: space-between
+    margin-bottom: 16px
+    height: 24px
+
+    &.absence_list-hide
+        margin-bottom: 40px
+
+.items_hidden-txt
+    display: none
+    font-family: Segoe UI
+    font-size: 16px
+    font-weight: 600
+    line-height: 24px
+    &.not_hidden
+        display: block
+
+.basket_hide-items
+    width: 20px
+    height: 20px
+    background: url('./images/hide-items-icon.svg')
+    margin-top: 2px
+    transition: transform .35s ease-in-out
+
+    &.items_hidden
+        transform: rotate(-180deg)
+
+.basket_form-line
+    height: 1px
+    content: ''
+    background: rgba(0, 0, 0, 0.1)
+
+    &.hide
+        display: none
+
+.basket_items-list
+    &.hide
+        display: none
+
+.basket_item-list
+    margin-bottom: 37.5px
+
+.basket_item
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    margin-bottom: 18px
+
+    &:first-child
+        .item_list-info
+            margin-top: 11px
+
+        .item_buttons
+            margin-top: 11px
+
+    &:first-of-type
+        margin-bottom: 20px
+
+    .basket_item-pic
+        &.absence_item-pic
+            filter: grayscale(100%)
+
+    .item_info-name, .item_info-detail
+        &.absence_txt
+            color: rgba(151, 151, 175, 1)
+            
+    .basket_item-info
+        &.absence_item-info
+            width: 309px
+
+    .item_buttons
+        &.item_buttons-absence
+            margin-right: 126px
+            margin-top: 0px
+
+            .item_like-delete
+                margin-top: 12px
+
+    &:first-child
+        .item_buttons-absence
+            .item_like-delete
+                margin-top: 11px
+
+
+
+    &.absence_item
+        margin-bottom: 20px
+    
+
+.item_list-info
+    margin-top: 12px
+    display: flex
+
+.item_choice-btn
+    margin: 37.5px 12px 0 0
+
+.basket_item-pic
+    flex-shrink: 0
+    width: 72px
+    height: 96px
+    border-radius: 8px
+    background-size:  cover !important
+    background-repeat: no-repeat
+    margin-right: 16px
+
+.basket_item-info
+    width: 275px
+    position: relative
+
+.item_info-name
+    display: block
+    font-family: Segoe UI
+    font-size: 16px
+    font-weight: 400
+    line-height: 24px
+    letter-spacing: 0px
+    text-align: left
+    color: black
+
+    &:hover
+        color: black
+
+.item_info-detail
+    font-family: Segoe UI
+    font-size: 13px
+    font-weight: 400
+    line-height: 16px
+    letter-spacing: 0px
+    text-align: left
+
+    &.item_info-owner
+        color: rgba(151, 151, 175, 1)
+        display: block
+        margin: 8px 0 0 0
+
+    &.item_info-storage
+        color: rgba(151, 151, 175, 1)
+        display: block
+        margin: 0
+        margin-right: 6px
+
+    &.item_color
+        display: block
+        margin-right: 16px
+
+    &.item_size
+        display: inline-block
+        margin-left: -2px
+
+.item_color_size
+    display: flex
+    margin-top: 8px
+
+.item_storage-container
+    margin-top: 2px
+    display: flex
+    align-items: center
+
+.info_icon
+    height: 20px
+    width: 20px
+    background: url('./images/info-icon.svg')
+    display: block
+    margin: 0
+
+.item_list-counter
+    display: flex
+
+.item_buttons
+    margin-top: 12px
+    width: 100px
+    margin-right: 16px
+
+.item_count
+    background: rgba(255, 255, 255, 1)
+    border-radius: 8px
+    height: 44px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding-bottom: 5px
+
+.count_minus
+    margin-left: 4px
+    height: 24px
+    width: 24px
+
+    &[disabled]
+        color: rgba(0, 0, 0, 0.2)
+
+.count_plus
+    margin-right: 3px
+    height: 24px
+    width: 24px
+
+    &[disabled]
+        color: rgba(0, 0, 0, 0.2)
+
+.font_count
+    font-family: Segoe UI
+    font-size: 20px
+    font-weight: 400
+    line-height: 24px
+    letter-spacing: -0.01em
+    text-align: center
+
+.item_quantity
+    font-family: Segoe UI
+    font-size: 16px
+    font-weight: 400
+    line-height: 24px
+    letter-spacing: 0px
+    text-align: center
+
+.item_left
+    font-family: Segoe UI
+    font-size: 13px
+    font-weight: 400
+    line-height: 16px
+    letter-spacing: 0px
+    color: rgba(255, 59, 48, 1)
+    margin-top: 8px
+    display: block
+
+.item_like-delete
+    display: flex
+    justify-content: flex-end
+    margin-top: 8px
+
+.item_like
+    width: 20px
+    height: 20px
+    margin-right: 16px
+    
+
+    .item_like-icon
+        display: block
+
+.item_like-clicked
+    filter: brightness(0) saturate(100%) invert(40%) sepia(34%) saturate(5207%) hue-rotate(349deg) brightness(99%) contrast(94%)
+
+.item_delete
+    width: 20px
+    height: 20px
+
+    .item_delete-icon
+        display: block
+
+    &:hover
+        filter: brightness(0) saturate(100%) invert(40%) sepia(34%) saturate(5207%) hue-rotate(349deg) brightness(99%) contrast(94%)
+
+.item_price-container
+    width: 110px
+    text-align: right
+    margin-top: 8px
+
+.item_price-new
+    font-family: Segoe UI
+    font-size: 20px
+    font-weight: 700
+    line-height: 28px
+    letter-spacing: -0.01em
+
+    &.big_price
+        font-size: 16px
+        font-weight: 700
+        line-height: 24px
+        letter-spacing: 0px
+        text-align: right
+
+
+.item_price-currency
+    display: inline-block
+    font-size: 16px
+    font-weight: 700
+    line-height: 24px
+    letter-spacing: 0px
+
+.item_price-old
+    display: inline-block
+    position: relative
+    font-family: Segoe UI
+    font-size: 13px
+    font-weight: 400
+    line-height: 16px
+    letter-spacing: 0px
+    text-align: right
+    margin-top: 5px
+    color: #9797AF
+    // text-decoration: line-through
+    border-bottom: 1px dashed #00000033
+    text-wrap: nowrap
+
+    &::after
+        border-top: 1px solid #9797AF
+        position: absolute
+        content: ""
+        top: 55%
+        left: 0
+        width: 100%
+
+.absence_item-header
+    margin-top: 37.5px
+
+    &.items_hidden
+        margin-bottom: 40px
+    &.basket_hidden
+        margin-top: 13px
+
+.absence_item-quantity
+    font-family: Segoe UI
+    font-size: 16px
+    font-weight: 600
+    line-height: 22px
+    letter-spacing: 0px
+    text-align: left
+
+.absence_item-list
+    margin-bottom: 40px
+    &.hide
+        display: none
+
+.item_hint
+    visibility: hidden
+    position: absolute
+    color: black
+    left: 50%
+    transform: translateX(-50% + 4)
+    padding: 11px 16px 13px 16px
+    width: 288px
+    background: white
+    box-shadow: 0px 0px 1px 0px #0000004D
+    box-shadow: 0px 2px 10px 0px #00000026
+    border-radius: 8px
+    z-index: -1
+    opacity: 1
+    top: calc(100% + 4px)
+    text-align: left
+    
+    .hint_storage
+        font-family: Segoe UI
+        font-size: 13px
+        font-weight: 700
+        line-height: 16px
+    
+    .hint_txt
+        font-family: Segoe UI
+        font-size: 13px
+        font-weight: 400
+        line-height: 16px
+        margin-top: 8px
+
+.info_icon
+    &:hover
+        .item_hint
+            z-index: 1
+            visibility: visible
+            animation: hint .3s forwards
+
+.price_hint
+    visibility: hidden
+    position: absolute
+    color: black
+    right: -9px
+    width: 238px
+    padding: 10px 16px 14px 16px
+    background: white
+    box-shadow: 0px 0px 1px 0px #0000004D
+    box-shadow: 0px 2px 10px 0px #00000026
+    border-radius: 8px
+    z-index: 0
+    opacity: 0
+    top: calc(100% + 4px)
+    display: flex
+    column-gap: 8px
+    justify-content: space-between
+
+    .price_hint-txt
+        font-family: Segoe UI
+        font-size: 13px
+        font-weight: 400
+        line-height: 16px
+        color: #A0A0A4
+        text-align: left
+
+        div:first-child
+            margin-bottom: 8px
+
+    .price_hint-discount
+        font-size: 13px
+        font-weight: 400
+        line-height: 16px
+        text-align: right
+
+        div:first-child
+            margin-bottom: 8px
+
+.item_price-old
+    &:hover
+        .price_hint
+            z-index: 1
+            visibility: visible
+            animation: hint .3s forwards

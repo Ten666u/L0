@@ -1,0 +1,53 @@
+@media (max-width: 1000px)
+    header
+        display: block
+
+    .header_container
+        padding: 14px 13px
+        height: 56px
+        justify-content: space-between
+        align-items: center
+        column-gap: 16px
+
+    .nav_elem-lines
+        margin: 0
+        padding: 0
+        width: 28px
+        height: 28px
+        border: none
+        background: url("./images/navigation-lines-mob.svg")
+
+    .nav_elem-logo
+        margin: 0px
+        padding-top: 10px
+        text-align: center
+        font-size: 20px
+        font-weight: 600
+        flex: 1
+        letter-spacing: 0.1em    
+        
+    .header_search
+        width: 28px
+        height: 28px
+        margin: 0
+        flex-grow: 0
+        align-items: center
+        justify-content: center
+        background: none
+        line-height: 24px
+        
+    .header_search-input
+        display: none
+
+    .header-search-button
+        position: static
+        display: block
+        background: url("./images/search-white-icon.svg") center no-repeat
+
+    .header_nav-pc
+        display: none
+
+    header::after
+        height: 25.38px
+        border-radius: 24px 24px 0px 0px
+        background: rgba(246, 246, 250, 1)
