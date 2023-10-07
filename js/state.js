@@ -1,5 +1,4 @@
 const state = {
-    
     items: [
         {
             quantity: 1,

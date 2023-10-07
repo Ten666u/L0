@@ -1,158 +1,5 @@
-let arrayItems = [
-    {
-        name: "Футболка UZcotton мужская",
-        picture: "first_item.png",
-        color: "белый",
-        size: [56].join("/"),
-        owner: "Коледино WB",
-        storage: "OOO Вайлдберриз",
-        storageDoc: "OOO «ВАЙЛДБЕРРИЗ»",
-        ogrn: "1067746062449",
-        storageAddress: "ул. Ленинская Слобода, 26, стр. 3, Москва этаж 3",
-        newPrice: 522,
-        oldPrice: 1051,
-        left: [2],
-        discount: 300,
-        persentDiscount: 55
-    },
-    {
-        name: "Силиконовый чехол картхолдер (отверстия) для карт, прозрачный кейс бампер на Apple iPhone XR, MobiSafe",
-        picture: "second_item.png",
-        color: "прозрачный",
-        owner: "Коледино WB",
-        storage: "OOO Мегапрофстиль",
-        storageDoc: "OOO «МЕГАПРОФСТИЛЬ»",
-        ogrn: "5167746237148",
-        storageAddress: "129337, Москва, улица Красная Сосна, 2, корпус 1, стр. 1, помещение 2, офис 34",
-        newPrice: 10500,
-        oldPrice: 11500,
-        left: [184, 50],
-        discount: 300,
-        persentDiscount: 55,
-    },
-    {
-        name: 'Карандаши цветные Faber-Castell "Замок", набор 24 цвета, заточенные, шестигранные, Faber‑Castell',
-        picture: "third_item.png",
-        owner: "Коледино WB",
-        storage: "OOO Вайлдберриз",
-        storageDoc: "OOO «ВАЙЛДБЕРРИЗ»",
-        ogrn: "1067746062449",
-        storageAddress: "ул. Ленинская Слобода, 26, стр. 3, Москва этаж 3",
-        newPrice: 247,
-        oldPrice: 475,
-        left: [2],
-        discount: 300,
-        persentDiscount: 55,
-    },
-];
-
-const personalArray = [
-    {
-        address: "Бишкек, улица Табышалиева, 57"
-    },
-    {
-        address: "Бишкек, улица Жукеева-Пудовкина, 77/1"
-    },
-    {
-        address: "Бишкек, микрорайон Джал, улица Ахунбаева Исы, 67/1"
-    }
-]
-
-const pointArray = [
-    {
-        address: "г. Бишкек, микрорайон Джал, улица Ахунбаева Исы, д. 67/1",
-        rating: "",
-        time: [10, 20]
-    },
-    {
-        address: "г. Бишкек, микрорайон Джал, улица Ахунбаева Исы, д. 67/1",
-        rating: 4.99,
-        time: [11, 21]
-    },
-    {
-        address: "г. Бишкек, улица Табышалиева, д. 57",
-        rating: 4.99,
-        time: [9, 19]
-    }
-]
-
-const state = {
-    
-    items: [
-        {
-            quantity: 1,
-            newPrice: 522,
-            oldPrice: 1051,
-            choose: true
-        },
-        {
-            quantity: 200,
-            newPrice: 10500,
-            oldPrice: 11500,
-            choose: true
-        },
-        {
-            quantity: 2,
-            newPrice: 247,
-            oldPrice: 475,
-            choose: true
-        }
-    ],
-
-    countQuantity: function(){
-        return this.items.reduce((sum, elem) => {
-            if(elem.choose == true){
-                return sum + elem.quantity
-            }
-            return sum
-        }, 0)
-    },
-
-    countItemPrice: function(index){
-        return this.items[index].quantity * this.items[index].newPrice
-    },
-
-    countItemOldPrice: function(index){
-        return this.items[index].quantity * this.items[index].oldPrice
-    },
-
-    countTotalPrice: function(){
-            
-        return this.items.reduce((sum, elem) => {
-                if(elem.choose == true){
-                    return sum += elem.newPrice * elem.quantity
-                }
-                return sum
-            }, 0) 
-    },
-
-    countTotalWithOutDiscount: function(){
-        return this.items.reduce((sum, elem) => {
-                if(elem.choose == true){
-                    return sum += elem.oldPrice * elem.quantity
-                }
-                return sum
-            }, 0)
-    },
-
-    countDiscount: function(){
-        return this.items.reduce((sum, elem) => {
-            if(elem.choose == true){
-                return sum += elem.oldPrice * elem.quantity - elem.newPrice * elem.quantity
-            }
-            return sum
-        }, 0)
-    },
-}
-
-
-// let arrayCards = [
-//     {
-
-//     }
-// ]
-
-const newPriceArray = []
+import { state } from "./state.js";
+import { arrayItems, pointArray, personalArray } from "./serverData.js";
 
 const createTagWithClass = (tagName, className) => {
     let tag = document.createElement(tagName);
@@ -163,8 +10,6 @@ const createTagWithClass = (tagName, className) => {
 
     return tag;
 };
-
-const basket = document.getElementById("basketItemsList")
 
 //=============================>Реализация корзины
 const checkBoxItemChange = (e) =>{
@@ -277,6 +122,7 @@ const deleteBasketItem = (e) =>{
     rerenderDetails()
 }
 
+const basket = document.getElementById("basketItemsList")
 //Заполняем товары в корзине
 const renderBasketItem = () => {
     for (let i = 0; i <= arrayItems.length - 1; i++) {
@@ -403,10 +249,10 @@ const renderBasketItem = () => {
             `
             <div class="item_like-delete">
                 <button class="item_like">
-                    <img src="./assets/styles/images/like-icon.svg" alt="" class="item_like-icon">
+                    <img src="./assets/images/like-icon.svg" alt="" class="item_like-icon">
                 </button>
                 <button class="item_delete">
-                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                    <img src="./assets/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
@@ -447,8 +293,6 @@ const renderBasketItem = () => {
         item.append(itemCounter);
         //Добавляем элемент на страницу
         basket.append(item);
-    
-        newPriceArray.push(obj.newPrice)
     }
 
     //Оживляем кнопки предметов
@@ -458,13 +302,29 @@ const renderBasketItem = () => {
     const itemLike = basket.querySelectorAll(".item_like")
     const itemDelete = basket.querySelectorAll(".item_delete")
 
-    for(let i = 0; i <= state.items.length - 1; i++){
+    for(let i = 0; i <= arrayItems.length - 1; i++){
         itemsMinBtn[i].addEventListener("click", itemMinus)
         itemsPlusBtn[i].addEventListener("click", itemPlus)
         wbCheckbox[i].addEventListener("change", checkBoxItemChange)
         itemLike[i].addEventListener("click", changeColorBtn)
         itemDelete[i].addEventListener("click", deleteBasketItem)
     }
+}
+
+const deleteAbsenceItem = (e, classParent) =>{
+    let itemContainer = findParent(e, classParent)
+    itemContainer.parentNode.removeChild(itemContainer)
+    
+
+    let itemsCounter = Number(absenceItemCounter.textContent) - 1
+    absenceItemCounter.textContent = itemsCounter
+    
+    if(itemsCounter == 0){
+        absenceLine.parentNode.removeChild(absenceLine)
+        headerAbsenceList.parentNode.removeChild(headerAbsenceList)
+    }
+
+    renderCheckEmptyBasket()
 }
 
 const absenceBasket = document.querySelector(".absence_item-list");
@@ -535,11 +395,11 @@ const renderAbsentItem = () =>{
             "beforeend",
             `
             <div class="item_like-delete">
-                <button class="item_like" onClick = "changeColorBtn(this)">
-                    <img src="./assets/styles/images/like-icon.svg" alt="" class="item_like-icon">
+                <button class="item_like">
+                    <img src="./assets/images/like-icon.svg" alt="" class="item_like-icon">
                 </button>
-                <button class="item_delete" onclick = "deleteAbsenceItem(this, 'absence_item')">
-                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                <button class="item_delete">
+                    <img src="./assets/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
@@ -550,7 +410,14 @@ const renderAbsentItem = () =>{
         //Добавляем элемент на страницу
         absenceBasket.append(item);
     }
-    
+
+    const itemLike = absenceBasket.querySelectorAll(".item_like")
+    const itemDelete = absenceBasket.querySelectorAll(".item_delete")
+
+    for(let i = 0; i <= arrayItems.length - 1; i++){
+        itemLike[i].addEventListener("click", changeColorBtn)
+        itemDelete[i].addEventListener("click", deleteAbsenceItem)
+    }
 }
 
 const deliveryItemsList = document.getElementById("deliveryItemsList")
@@ -758,8 +625,31 @@ const renderDiscount = () =>{
     );
 }
 
+const deletePointAddress = (e) => {
+    let target = e.target
+
+    let parent = findParent(target, 'choose_address')
+
+    if(pointAddressList.querySelectorAll(".choose_address").length == 1){
+        target.disabled = true
+        return
+    }
+    parent.parentNode.removeChild(parent)
+}
+
+const deletePersonalAddress = (e) => {
+    let target = e.target
+    let parent = findParent(target, "choose_address")
+
+    if(personalAddressList.querySelectorAll(".choose_address").length == 1){
+        target.disabled = true
+        return
+    }
+    parent.parentNode.removeChild(parent)
+}
+
 const personalAddressList = document.getElementById("personalAddressList")
-    
+ 
 const renderPersonalAddressList = () =>{
     for(let i = 0; i <= personalArray.length - 1; i++){
         let addressObj = personalArray[i]
@@ -775,12 +665,18 @@ const renderPersonalAddressList = () =>{
                 <label for="personalAddress${i}">
                     <span class="label_txt">${addressObj.address}</span>
                 </label>
-                <button class="item_delete" onclick="deletePersonalAddress(this, 'choose_address')">
-                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                <button class="item_delete">
+                    <img src="./assets/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
         );
+    }
+
+    const itemDeleteBtn = personalAddressList.querySelectorAll(".item_delete")
+
+    for(let i = 0; i <= personalArray.length - 1; i++){
+        itemDeleteBtn[i].addEventListener("click", deletePersonalAddress)
     }
 }
 
@@ -806,12 +702,18 @@ const renderPointAddressList = () =>{
                         <span class="point_detail-txt absence">Пункт выдачи</span>
                     </div>
                 </label>
-                <button class="item_delete" onclick="deletePointAddress(this, 'choose_address')">
-                    <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
+                <button class="item_delete">
+                    <img src="./assets/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
             `
         );
+    }
+
+    const itemDeleteBtn = pointAddressList.querySelectorAll(".item_delete")
+
+    for(let i = 0; i <= pointArray.length - 1; i++){
+        itemDeleteBtn[i].addEventListener("click", deletePointAddress)
     }
 }
 
@@ -829,22 +731,26 @@ renderDiscount()
 renderPersonalAddressList()
 renderPointAddressList()
 
+const selectPayImmediatelyBtn = document.getElementById("selectPayImmediatelyBtn")
 
 const selectPayImmediately = (e) => {
+    const target = e.target
     const payDetailBasket = document.getElementById("payDetailBasket");
     const payDetailOrder = document.getElementById("payDetailOrder");
     const orderButtonTxt = document.getElementById("orderButtonTxt");
 
-    if (e.checked) {
+    if (target.checked) {
         document.getElementById("payDetailBasket").style.display = "none";
         payDetailOrder.style.display = "none";
-        orderButtonTxt.textContent = `Оплатить`;
+        orderButtonTxt.textContent = `Оплатить ${state.countTotalPrice().toLocaleString()} сом`;
     } else {
         payDetailBasket.style.display = "block";
         payDetailOrder.style.display = "block";
         orderButtonTxt.textContent = "Заказать";
     }
 };
+
+selectPayImmediatelyBtn.addEventListener("click", selectPayImmediately)
 
 //=======================================> Медиа-Запрос для телефонов
 const mobileWidth = window.matchMedia("(max-width: 1000px)");
@@ -899,19 +805,39 @@ mobileWidth.addEventListener("change", function (event) {
     printLog(event.matches);
 });
 
+const openDeliveryModalBtn = document.getElementById("openDeliveryModalBtn")
+const openDeliveryModalPenBtn = document.getElementById("openDeliveryModalPenBtn")
+const closeDeliveryModalBtn = document.getElementById("closeDeliveryModalBtn")
+const chooseDeliveryModalBtn = document.getElementById("chooseDeliveryModalBtn")
+
+const openCardModalBtn = document.getElementById("openCardModalBtn")
+const openCardModalPenBtn = document.getElementById("openCardModalPenBtn")
+const closeCardModalBtn = document.getElementById("closeCardModalBtn")
+const chooseCardModalBtn = document.getElementById("chooseCardModalBtn")
+
 const openHideModal = (idModal) => {
-    let modal = document.getElementById(idModal)
-    modal.classList.toggle("hidden")
+    return () => {
+        let modal = document.getElementById(idModal)
+        modal.classList.toggle("hidden")
+    }
 }
+
+openDeliveryModalBtn.addEventListener("click", openHideModal("deliveryModal"))
+openDeliveryModalPenBtn.addEventListener("click", openHideModal("deliveryModal"))
+closeDeliveryModalBtn.addEventListener("click", openHideModal("deliveryModal"))
+
+openCardModalBtn.addEventListener("click", openHideModal("cardModal"))
+openCardModalPenBtn.addEventListener("click", openHideModal("cardModal"))
+closeCardModalBtn.addEventListener("click", openHideModal("cardModal"))
 
 //======================================>Изменение карты
 const switchCard = () => {
-    let basketCard = document.getElementById("basketCard")
-    let orderCard = document.getElementById("orderCard")
+    const basketCard = document.getElementById("basketCard")
+    const orderCard = document.getElementById("orderCard")
 
-    let chooseCard = document.querySelector('input[name="card"]:checked').value
+    const chooseCard = document.querySelector('input[name="card"]:checked').value
 
-    let oldCard = basketCard.classList[1]
+    const oldCard = basketCard.classList[1]
 
     orderCard.classList.remove(oldCard)
     basketCard.classList.remove(oldCard)
@@ -919,46 +845,48 @@ const switchCard = () => {
     basketCard.classList.add(chooseCard)
     orderCard.classList.add(chooseCard)
 
-    openHideModal("cardModal")
+    openHideModal("cardModal")()
 }
 
+chooseCardModalBtn.addEventListener("click", switchCard)
+
 //======================================>Изменение доставки
+const pointAddressBtn = document.getElementById("pointAddressBtn")
+const personalAddressBtn = document.getElementById("personalAddressBtn")
+
 const choosePointList = (e) =>{
     personalAddressList.classList.add("hideAddress")
     pointAddressList.classList.remove("hideAddress")
-
-    let personalAddressBtn = document.getElementById("personalAddressBtn")
     personalAddressBtn.classList.remove("type_btn-pressed")
-
-    e.classList.add("type_btn-pressed")
+    e.target.classList.add("type_btn-pressed")
 }
 
 const choosePersonalList = (e) =>{
     pointAddressList.classList.add("hideAddress")
     personalAddressList.classList.remove("hideAddress")
-
-    let pointAddressBtn = document.getElementById("pointAddressBtn")
     pointAddressBtn.classList.remove("type_btn-pressed")
-
-    e.classList.add("type_btn-pressed")
+    e.target.classList.add("type_btn-pressed")
 }
 
+pointAddressBtn.addEventListener("click", choosePointList)
+personalAddressBtn.addEventListener("click", choosePersonalList)
+
 const chooseAddress = () =>{
-    let orderDeliveryType = document.getElementById("orderDeliveryType")
-    let orderAddress = document.getElementById("orderAddress")
+    const orderDeliveryType = document.getElementById("orderDeliveryType")
+    const orderAddress = document.getElementById("orderAddress")
 
-    let basketDeliveryType = document.getElementById("basketDeliveryType")
-    let basketAddress = document.getElementById("basketAddress")
-    let basketPointDetail = document.getElementById("basketPointDetail")
-    let basketDeliveryData = document.getElementById("basketPointTime")
-    let pointRating = document.getElementById("pointRating")
+    const basketDeliveryType = document.getElementById("basketDeliveryType")
+    const basketAddress = document.getElementById("basketAddress")
+    const basketPointDetail = document.getElementById("basketPointDetail")
+    const basketDeliveryData = document.getElementById("basketPointTime")
+    const pointRating = document.getElementById("pointRating")
 
-    let pointAddressBtn = document.getElementById("pointAddressBtn")
-    let personalAddressBtn = document.getElementById("personalAddressBtn")
+    const pointAddressBtn = document.getElementById("pointAddressBtn")
+    const personalAddressBtn = document.getElementById("personalAddressBtn")
     let objAddress = {}
     
     if(pointAddressBtn.classList.contains("type_btn-pressed")){
-        let chooseAddress = pointAddressList.querySelector("input[name='address-point']:checked")
+        const chooseAddress = pointAddressList.querySelector("input[name='address-point']:checked")
         objAddress = pointArray[chooseAddress.value]
 
         basketDeliveryType.textContent = "Пункт выдачи"
@@ -970,7 +898,7 @@ const chooseAddress = () =>{
     }
 
     else if(personalAddressBtn.classList.contains("type_btn-pressed")){
-        let chooseAddress = personalAddressList.querySelector("input[name='address-personal']:checked")
+        const chooseAddress = personalAddressList.querySelector("input[name='address-personal']:checked")
         objAddress = personalArray[chooseAddress.value]
 
         basketDeliveryType.textContent = "Курьером"
@@ -980,13 +908,22 @@ const chooseAddress = () =>{
     }
 
     basketAddress.textContent = orderAddress.textContent = objAddress.address
-    openHideModal('deliveryModal')
+    openHideModal('deliveryModal')()
 }
 
+chooseDeliveryModalBtn.addEventListener("click", chooseAddress)
+
 //===================================================> Инпуты в форме данных
+const inputFirstName = document.getElementById("inputFirstName")
+const inputSecondName = document.getElementById("inputSecondName")
+const inputEmail = document.getElementById("inputEmail")
+const inputPhone = document.getElementById("inputPhone")
+const inputINN = document.getElementById("inputINN")
+
 const checkINN = (e, btnPressed = false) =>{
-    let INN = e.value
-    let error = document.getElementById("errorINN")
+    const target = e.target
+    const INN = target.value
+    const error = document.getElementById("errorINN")
 
     if((INN.length == 0) && !btnPressed){
         return
@@ -995,7 +932,7 @@ const checkINN = (e, btnPressed = false) =>{
     if((INN.length == 0) && btnPressed){
         error.classList.remove("not_error")
         error.textContent = "Укажите ИНН"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
 
         return
     }
@@ -1003,7 +940,7 @@ const checkINN = (e, btnPressed = false) =>{
     if(INN.length < 14){
         error.classList.remove("not_error")
         error.textContent = "Проверьте ИНН"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
 
         return
     }
@@ -1012,28 +949,30 @@ const checkINN = (e, btnPressed = false) =>{
 }
 
 const checkInputINN = (e) =>{
-    let onlyNumber = /[0-9]/g
-    let error = document.getElementById("errorINN")
+    const target = e.target
+    const onlyNumber = /[0-9]/g
+    const error = document.getElementById("errorINN")
 
-    str = e.value
+    str = target.value
 
-    str.match(onlyNumber) ? e.value = str.match(onlyNumber).join("") : e.value = ""
+    str.match(onlyNumber) ? target.value = str.match(onlyNumber).join("") : target.value = ""
 
     if(str.length == 14){
         error.classList.add("not_error")
         error.textContent = "Для таможенного оформления"
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
     }
 }
 
 const checkInputPhone = (e) =>{
-    let onlyNumber = /[0-9]/g
-    let errorPhone = document.getElementById("errorPhone")
+    const target = e.target
+    const onlyNumber = /[0-9]/g
+    const errorPhone = document.getElementById("errorPhone")
 
-    str = e.value.match(onlyNumber)
+    str = target.value.match(onlyNumber)
 
     if(str == null){
-        e.value = ""
+        target.value = ""
         return
     }
     else{
@@ -1063,17 +1002,18 @@ const checkInputPhone = (e) =>{
         }    
     }
 
-    e.value = phoneStr
+    target.value = phoneStr
 
     if(phoneStr.length == 16){
         errorPhone.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
     }
 }
 
 const checkPhone = (e, btnPressed = false) =>{
-    let phoneStr = e.value
-    let error = document.getElementById("errorPhone")
+    const target = e.target
+    const phoneStr = target.value
+    const error = document.getElementById("errorPhone")
 
     if((phoneStr.length == 0) && !btnPressed){
         return
@@ -1081,13 +1021,13 @@ const checkPhone = (e, btnPressed = false) =>{
 
     if((phoneStr.length == 0) && btnPressed){
         error.textContent = "Укажите номер телефона"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
         return
     }
 
     if(phoneStr.length < 16){
         error.textContent = "Формат: +9 999 999 99 99"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
         return
     }
 
@@ -1095,45 +1035,48 @@ const checkPhone = (e, btnPressed = false) =>{
 }
 
 const checkFirstName = (e, btnPressed = false) =>{
-    let nameStr = e.value
-    let error = document.getElementById("errorFirstName")
+    const target = e.target
+    const nameStr = target.value
+    const error = document.getElementById("errorFirstName")
 
     if(!nameStr && btnPressed){
         error.textContent = "Укажите имя"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
     }
 
     if(nameStr && !btnPressed){
         error.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
     }
 
     return true
 }
 
 const checkInputFirstName = (e) =>{
-    let nameStr = e.value
-    let error = document.getElementById("errorFirstName")
+    const target = e.target
+    const nameStr = target.value
+    const error = document.getElementById("errorFirstName")
 
     if(nameStr){
         error.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
     }
 }
 
 const checkSecondName = (e, btnPressed = false) =>{
-    let secondNameStr = e.value
-    let error = document.getElementById("errorSecondName")
+    const target = e.target
+    const secondNameStr = target.value
+    const error = document.getElementById("errorSecondName")
 
     if(!secondNameStr && btnPressed){
         error.textContent = "Введите фамилию"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
         return
     }
     
     if(secondNameStr && !btnPressed){
         error.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
         return
     }
 
@@ -1141,12 +1084,13 @@ const checkSecondName = (e, btnPressed = false) =>{
 }
 
 const checkInputSecondName = (e) =>{
-    let nameStr = e.value
-    let error = document.getElementById("errorSecondName")
+    const target = e.target
+    const nameStr = target.value
+    const error = document.getElementById("errorSecondName")
 
     if(nameStr){
         error.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
     }
 }
 
@@ -1157,26 +1101,27 @@ const validEmail = (email) => {
 }
 
 const checkEmail = (e, btnPressed = false) =>{
-    let email = e.value
-    let error = document.getElementById("errorEmail")
+    const target = e.target
+    const email = target.value
+    const error = document.getElementById("errorEmail")
 
     emailValid = validEmail(email)
 
     if(!emailValid && btnPressed){
         error.textContent = "Укажите электронную почту"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
         return
     }
 
     if(!email && !btnPressed){
         error.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
         return
     }
 
     if(!emailValid && !btnPressed){
         error.textContent = "Проверьте адрес электронной почты"
-        e.classList.add("invalid")
+        target.classList.add("invalid")
         return
     }
 
@@ -1184,37 +1129,48 @@ const checkEmail = (e, btnPressed = false) =>{
 }
 
 const checkInputEmail = (e) =>{
-    let email = e.value
-    let error = document.getElementById("errorEmail")
+    const target = e.target
+    let email = target.value
+    const error = document.getElementById("errorEmail")
 
     email = validEmail(email)
 
     if(email){
         error.textContent = ""
-        e.classList.remove("invalid")
+        target.classList.remove("invalid")
     }
 }
 
+inputFirstName.addEventListener("blur", checkFirstName)
+inputSecondName.addEventListener("blur", checkSecondName)
+inputEmail.addEventListener("blur", checkEmail)
+inputPhone.addEventListener("blur", checkPhone)
+inputINN.addEventListener("blur", checkINN)
+
+inputFirstName.addEventListener("input", checkInputFirstName)
+inputSecondName.addEventListener("input", checkInputSecondName)
+inputEmail.addEventListener("input", checkInputEmail)
+inputPhone.addEventListener("input", checkInputPhone)
+inputINN.addEventListener("input", checkInputINN)
+
+const orderButton = document.getElementById("orderButton")
+
 const orderAllInput = () =>{
-    let INN = document.getElementById("inputINN")
-    let phone = document.getElementById("inputPhone")
-    let firstName = document.getElementById("inputFirstName")
-    let secondName = document.getElementById("inputSecondName")
-    let email = document.getElementById("inputEmail")
-    let personalFormAnchor = document.getElementById("personalFormAnchor")
+    const personalFormAnchor = document.getElementById("personalFormAnchor")
 
-
-    let scrollFlag = checkINN(INN, true) & checkEmail(email, true) & checkSecondName(secondName, true) & checkFirstName(firstName, true) & checkPhone(phone, true)
+    let scrollFlag = checkFirstName({target: inputFirstName}, true) & checkSecondName({target: inputSecondName}, true) &  checkEmail({target: inputEmail}, true) & checkPhone({target: inputPhone}, true) & checkINN({target: inputINN}, true)
 
     if(!scrollFlag){
         personalFormAnchor.scrollIntoView({ behavior: "smooth", inline: "nearest" });
     }
 }
 
+orderButton.addEventListener("click", orderAllInput)
+
 //=============================>
 const selectAllItems = (e) => {
-    let target = e.target
-    let checkboxes = document.getElementsByName("item-checkbox");
+    const target = e.target
+    const checkboxes = document.getElementsByName("item-checkbox");
 
     for (let i = 0; i <= checkboxes.length - 1; i++) {
         if(checkboxes[i].checked != target.checked){
@@ -1228,7 +1184,7 @@ const selectAllCheckBox = document.getElementById("selectAllCheckBox")
 selectAllCheckBox.addEventListener("click", selectAllItems)
 
 const hideBasketItemsBtn = document.getElementById("hideBasketItemsBtn")
-const hideAbsenceBtn = document.getElementById("hideAbsenceItems")
+const hideAbsenceItemsBtn = document.getElementById("hideAbsenceItemsBtn")
 const headerAbsenceList = document.getElementById("headerAbsenceList")
 const absenceItemList = document.getElementById("absenceItemList")
 const absenceLine = document.getElementById("absenceLine")
@@ -1238,11 +1194,13 @@ const selectAll = document.getElementById("selectAll")
 const itemsHiddenTxt = document.getElementById("itemsHiddenTxt")
 
 const hideBasketItems = (e) =>{
+    const target = e.target
+
     basketItemsList.classList.toggle("hide")
     headerAbsenceList.classList.toggle("basket_hidden")
     selectAll.classList.toggle("hide")
     itemsHiddenTxt.classList.toggle("not_hidden")
-    e.classList.toggle("items_hidden")
+    target.classList.toggle("items_hidden")
     basketFormLine.classList.toggle("basket_hidden")
 
     let quantity = state.countQuantity()
@@ -1275,12 +1233,17 @@ const hideBasketItems = (e) =>{
     itemsHiddenTxt.textContent = quantityStr + " · " + sum.toLocaleString() + " сом"
 }
 
+
 const hideAbsenceItem = (e) =>{
+    const target = e.target
     absenceItemList.classList.toggle("hide")
     absenceLine.classList.toggle("hide")
     headerAbsenceList.classList.toggle("items_hidden")
-    e.classList.toggle("items_hidden")
+    target.classList.toggle("items_hidden")
 }
+
+hideBasketItemsBtn.addEventListener("click", hideBasketItems)
+hideAbsenceItemsBtn.addEventListener("click", hideAbsenceItem)
 
 //=============================>Кнопки удаления
 const findParent = (elem, classParent) =>{
@@ -1291,29 +1254,9 @@ const findParent = (elem, classParent) =>{
     return findParent(elem.parentElement, classParent)
 }
 
-const deletePointAddress = (e, classParent) => {
-    let parent = findParent(e, classParent)
-
-    if(pointAddressList.querySelectorAll(".choose_address").length == 1){
-        e.disabled = true
-        return
-    }
-    parent.parentNode.removeChild(parent)
-}
-
-const deletePersonalAddress = (e, classParent) => {
-    let parent = findParent(e, classParent)
-
-    if(personalAddressList.querySelectorAll(".choose_address").length == 1){
-        e.disabled = true
-        return
-    }
-    parent.parentNode.removeChild(parent)
-}
-
 const renderCheckEmptyBasket = () =>{
     if((basketItemsList.children.length == 0) && (absenceItemList.children.length == 0)){
-        let basketPage = document.querySelector(".basket_page")
+        const basketPage = document.querySelector(".basket_page")
         basketPage.classList.add("basket_empty")
         basketPage.innerHTML = ''
         basketPage.insertAdjacentHTML(
@@ -1332,20 +1275,4 @@ const renderCheckEmptyBasket = () =>{
             `
         );
     }
-}
-
-const deleteAbsenceItem = (e, classParent) =>{
-    let itemContainer = findParent(e, classParent)
-    itemContainer.parentNode.removeChild(itemContainer)
-    
-
-    let itemsCounter = Number(absenceItemCounter.textContent) - 1
-    absenceItemCounter.textContent = itemsCounter
-    
-    if(itemsCounter == 0){
-        absenceLine.parentNode.removeChild(absenceLine)
-        headerAbsenceList.parentNode.removeChild(headerAbsenceList)
-    }
-
-    renderCheckEmptyBasket()
 }

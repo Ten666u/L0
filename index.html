@@ -40,7 +40,7 @@
                             <span class="checkbox_txt">Выбрать все</span>
                         </label>
                         <div class="items_hidden-txt" id="itemsHiddenTxt">266 товаров · 2 100 569 сом</div>
-                        <button class="basket_hide-items" id="hideBasketItemsBtn" onclick="hideBasketItems(this)"></button>
+                        <button class="basket_hide-items" id="hideBasketItemsBtn"></button>
                     </div>
                     <div class="basket_form-line" id="basketFormLine"></div>
                     <div class="basket_items-list" id="basketItemsList">
@@ -48,7 +48,7 @@
                     <div class="absence_item-header" id="headerAbsenceList">
                         <div class="basket_buttons-items">
                             <span class="absence_item-quantity">Отсутствуют · <span id="absenceItemCounter">3</span> товара</span>
-                            <button class="basket_hide-items" id="hideAbsenceBtn" onclick="hideAbsenceItem(this)"></button>
+                            <button class="basket_hide-items" id="hideAbsenceItemsBtn"></button>
                         </div>
                     </div>
                     <div class="basket_form-line" id="absenceLine"></div>
@@ -57,7 +57,7 @@
                 <div class="basket_container-form">
                     <div class="basket_delivery-header">
                         <span class="delivery_header-txt">Способ доставки</span>
-                        <button class="header_button-switch" onClick = "openHideModal('deliveryModal')">Изменить</button>
+                        <button class="header_button-switch" id="openDeliveryModalBtn">Изменить</button>
                     </div>
                     <div class="basket_delivery-section">
                         <span class="delivery_point-txt" id="basketDeliveryType">Пункт выдачи</span>
@@ -104,7 +104,7 @@
                 <div class="basket_container-form">
                     <div class="basket_delivery-header">
                         <span class="delivery_header-txt">Способ оплаты</span>
-                        <button class="header_button-switch" onClick="openHideModal('cardModal')">Изменить</button>
+                        <button class="header_button-switch" id="openCardModalBtn">Изменить</button>
                     </div>
                     <div class="basket_card-container">
                         <div class="basket_card-icon mir_card-icon" id="basketCard"></div>
@@ -119,29 +119,29 @@
                     </div>
                     <div class="basket_name-form" >
                         <div class="first_name-container">
-                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputFirstName" onblur="checkFirstName(this)" oninput="checkInputFirstName(this)">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputFirstName">
                             <span class="floating-label">Имя</span>
                             <span class="error_message" id="errorFirstName"></span>
                         </div>
                         <div class="second_name-container">
-                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputSecondName" onblur="checkSecondName(this)" oninput="checkInputSecondName(this)">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputSecondName">
                             <span class="floating-label">Фамилия</span>
                             <span class="error_message" id="errorSecondName"></span>
                         </div>
                     </div>
                     <div class="basket_doc-form">
                         <div class="mail_container">
-                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputEmail" onblur="checkEmail(this)" oninput="checkInputEmail(this)">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" id="inputEmail">
                             <span class="floating-label" id="floatingLabelMail">Почта</span>
                             <span class="error_message" id="errorEmail"></span>
                         </div>
                         <div class="phone_number-container">
-                            <input type="text" class="basket_form-input" placeholder="&ensp;" maxlength="30" id="inputPhone" oninput="checkInputPhone(this)" onblur = "checkPhone(this)">
+                            <input type="text" class="basket_form-input" placeholder="&ensp;" maxlength="30" id="inputPhone">
                             <span class="floating-label">Телефон</span>
                             <span class="error_message" id="errorPhone"></span>
                         </div>
                         <div class="INN_container">
-                            <input class="basket_form-input" id="inputINN" maxlength="14" type="text" placeholder="&ensp;"  oninput="checkInputINN(this)" onblur="checkINN(this)"/>
+                            <input class="basket_form-input" id="inputINN" maxlength="14" type="text" placeholder="&ensp;">
                             <span class="floating-label">ИНН</span>
                             <span class="error_message not_error" id = "errorINN">Для таможенного оформления</span>
                         </div>
@@ -168,7 +168,7 @@
                 <div class="order_delivery">
                     <div class="order_header-btn">
                         <h4 class="order_header-txt" id="orderDeliveryType">Доставка в пункт выдачи</h4>
-                        <button class="pen_button" onClick = "openHideModal('deliveryModal')"></button>
+                        <button class="pen_button" id="openDeliveryModalPenBtn"></button>
                     </div>
                     <span class="order_delivery-point" id="orderAddress">Бишкек, улица Ахматбека Суюмбаева, 12/1</span>
                     <span class="order_delivery-data" id="deliveryData">5–8 фев</span>
@@ -188,7 +188,7 @@
                 <div class="order_payment">
                     <div class="order_header-btn">
                         <h4 class="order_header-txt">Оплата картой</h4>
-                        <button class="pen_button" onClick = "openHideModal('cardModal')"></button>
+                        <button class="pen_button" id="openCardModalPenBtn"></button>
                     </div>
                     <div class="order_card-container">
                         <div class="basket_card-icon mir_card-icon" id="orderCard"></div>
@@ -197,12 +197,12 @@
                 </div>
                 <div class="order_pay-container">
                     <label class="custom-checkbox">
-                        <input type="checkbox" class="wb-checkbox" onClick="selectPayImmediately(this)">
+                        <input type="checkbox" class="wb-checkbox" id = "selectPayImmediatelyBtn">
                         <span class="order_checkbox-txt">Списать оплату сразу</span>
                     </label>
                     <div class="basket_card-pay order_card-pay" id = "payDetailOrder">Спишем оплату с карты при получении</div>
                 </div>
-                <button class="order_button" onClick="orderAllInput()" id="orderButton">
+                <button class="order_button" id="orderButton">
                     <span class="order_button-txt" id="orderButtonTxt">
                         Заказать
                     </span>
@@ -230,7 +230,7 @@
         <div class="modal_container modal_cards">
             <div class="modal_header">
                 <span class="modal_header-txt">Способ оплаты</span>
-                <button class="modal_header-close" onClick="openHideModal('cardModal')"></button>
+                <button class="modal_header-close" id = "closeCardModalBtn"></button>
             </div>
             <div class="modal_info-container">
                 <div class="choose_card-container">
@@ -263,7 +263,7 @@
                 </div>
             </div>
             <div class="modal_button-container">
-                <button class="order_button modal_button" onClick="switchCard()">
+                <button class="order_button modal_button" id="chooseCardModalBtn">
                     <span class="order_button-txt" id="orderButtonTxt">
                         Выбрать
                     </span>
@@ -275,26 +275,26 @@
         <div class="modal_container modal_delivery">
             <div class="modal_header">
                 <span class="modal_header-txt">Способ доставки</span>
-                <button class="modal_header-close" onClick = "openHideModal('deliveryModal')"></button>
+                <button class="modal_header-close" id="closeDeliveryModalBtn"></button>
             </div>
             <div class="modal_info-container">
                 <div class="choose_delivery-type">
-                    <button class = "delivery_type-btn" id="pointAddressBtn" onClick="choosePointList(this)"><span class="delivery_type-txt">В пункт выдачи</span></button>
-                    <button class = "delivery_type-btn type_btn-pressed" id="personalAddressBtn" onClick="choosePersonalList(this)"><span class="delivery_type-txt">Курьером</span></button>
+                    <button class = "delivery_type-btn" id="pointAddressBtn"><span class="delivery_type-txt">В пункт выдачи</span></button>
+                    <button class = "delivery_type-btn type_btn-pressed" id="personalAddressBtn"><span class="delivery_type-txt">Курьером</span></button>
                 </div>
                 <div class="modal_info-header">Мои адреса</div>
                 <fieldset id="pointAddressList" class = "hideAddress"></fieldset>
                 <fieldset id="personalAddressList"></fieldset>
             </div>
             <div class="modal_button-container">
-                <button class="order_button modal_button" onclick="chooseAddress()">
-                    <span class="order_button-txt" id="orderButtonTxt">
+                <button class="order_button modal_button" id="chooseDeliveryModalBtn">
+                    <span class="order_button-txt">
                         Выбрать
                     </span>
                 </button>
             </div>
         </div>
     </div>
-    <script src="./js/main.js"></script>
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>
