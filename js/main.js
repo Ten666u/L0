@@ -114,7 +114,35 @@ const state = {
 
     countItemOldPrice: function(index){
         return this.items[index].quantity * this.items[index].oldPrice
-    }
+    },
+
+    countTotalPrice: function(){
+            
+        return this.items.reduce((sum, elem) => {
+                if(elem.choose == true){
+                    return sum += elem.newPrice * elem.quantity
+                }
+                return sum
+            }, 0) 
+    },
+
+    countTotalWithOutDiscount: function(){
+        return this.items.reduce((sum, elem) => {
+                if(elem.choose == true){
+                    return sum += elem.oldPrice * elem.quantity
+                }
+                return sum
+            }, 0)
+    },
+
+    countDiscount: function(){
+        return this.items.reduce((sum, elem) => {
+            if(elem.choose == true){
+                return sum += elem.oldPrice * elem.quantity - elem.newPrice * elem.quantity
+            }
+            return sum
+        }, 0)
+    },
 }
 
 
@@ -138,6 +166,117 @@ const createTagWithClass = (tagName, className) => {
 
 const basket = document.getElementById("basketItemsList")
 
+//=============================>Реализация корзины
+const checkBoxItemChange = (e) =>{
+    const target = e.target
+    const itemContainer = findParent(target, "basket_item")
+    const itemNumber = itemContainer.id.at(-1)
+    let itemState = state.items[itemNumber]
+
+    itemState.choose = !itemState.choose
+    rerenderDetails()
+}
+
+const itemPlus = (e) =>{
+    const target = e.target
+    const itemContainer = findParent(target, "basket_item")
+    const itemNumber = itemContainer.id.at(-1)
+    const itemQuantity = itemContainer.querySelector(".item_quantity")
+    const countMinus = itemContainer.querySelector(".count_minus")
+    const itemPriceNew = itemContainer.querySelector(".item_price-new")
+    const itemPriceOld = itemContainer.querySelector(".item_price-old")
+    const itemState = state.items[itemNumber]
+    let obj = arrayItems[itemNumber]
+
+    if(countMinus.disabled == true){
+        countMinus.disabled = false
+    }
+
+    itemState.quantity++
+    itemQuantity.textContent = itemState.quantity
+    itemPriceNew.textContent = state.countItemPrice(itemNumber).toLocaleString()
+    
+    itemPriceOld.textContent = state.countItemOldPrice(itemNumber).toLocaleString() + " сом"
+
+    itemPriceOld.insertAdjacentHTML(
+        "beforeend",
+        `
+            <div class="price_hint">
+                <div class="price_hint-txt">
+                    <div>Скидка ${obj.persentDiscount}%</div>
+                    <div>Скидка покупателя 10%</div>
+                </div>
+                <div class="price_hint-discount">
+                    <div>${obj.discount} сом</div>
+                    <div>−30 сом</div>
+                </div>
+            </div>
+        `
+    );
+
+
+    if(String(itemPriceNew.textContent).length > 6){
+        itemPriceNew.classList.add("big_price")
+    }
+
+    let limitQuantity =  arrayItems[itemNumber].left.reduce((sum, elem) =>{
+        return sum += elem
+    }, 0)
+
+    if(itemState.quantity == limitQuantity){
+        target.disabled = true
+    }
+
+    rerenderDetails()
+}
+
+const itemMinus = (e) =>{
+    const target = e.target
+    const itemContainer = findParent(target, "basket_item")
+    const itemNumber = itemContainer.id.at(-1)
+    const itemQuantity = itemContainer.querySelector(".item_quantity")
+    const countPlus = itemContainer.querySelector(".count_plus")
+    const itemPriceNew = itemContainer.querySelector(".item_price-new")
+    const itemPriceOld = itemContainer.querySelector(".item_price-old")
+    const itemState = state.items[itemNumber]
+
+    if(countPlus.disabled == true){
+        countPlus.disabled = false
+    }
+
+    itemState.quantity--
+    itemQuantity.textContent = itemState.quantity
+    itemPriceNew.textContent = state.countItemPrice(itemNumber).toLocaleString()
+
+    itemPriceOld.textContent = state.countItemOldPrice(itemNumber).toLocaleString() + " сом"
+    
+    if(String(itemPriceNew.textContent).length <= 6){
+        itemPriceNew.classList.remove("big_price")
+    }
+
+    if(itemState.quantity == 1){
+        target.disabled = true
+    }
+
+    rerenderDetails()
+}
+
+const changeColorBtn = (e) => {
+    e.target.classList.toggle("item_like-clicked")
+}
+
+const deleteBasketItem = (e) =>{
+    let target = e.target
+    let itemContainer = findParent(target, "basket_item")
+    let itemNumber = itemContainer.id.at(-1)
+    state.items[itemNumber].choose = false
+
+    itemContainer.parentNode.removeChild(itemContainer)
+
+    renderCheckEmptyBasket()
+    rerenderDetails()
+}
+
 //Заполняем товары в корзине
 const renderBasketItem = () => {
     for (let i = 0; i <= arrayItems.length - 1; i++) {
@@ -154,7 +293,7 @@ const renderBasketItem = () => {
             "beforeend",
             `<div class="item_choice-btn">
                 <label class="custom-checkbox">
-                    <input type="checkbox" class="wb-checkbox" name="item-checkbox" onchange="checkBoxItemChange(this)" checked>
+                    <input type="checkbox" class="wb-checkbox" name="item-checkbox"" checked>
                 </label>
             </div>`
         );
@@ -240,11 +379,11 @@ const renderBasketItem = () => {
             "beforeend",
             `
             <div class="item_count">
-                <button class="count_minus" onclick = "itemMinus(this)" ${buttonMinusDisable}>
+                <button class="count_minus" ${buttonMinusDisable}>
                     <span class="font_count count_content">−</span>
                 </button>
                 <span class="item_quantity">${itemState.quantity}</span>
-                <button class="font_count count_plus" onclick = "itemPlus(this)" ${buttonPlusDisable}>+</button>
+                <button class="font_count count_plus" ${buttonPlusDisable}>+</button>
             </div>
             `
         );
@@ -263,10 +402,10 @@ const renderBasketItem = () => {
             "beforeend",
             `
             <div class="item_like-delete">
-                <button class="item_like" onClick = "changeColorBtn(this)">
+                <button class="item_like">
                     <img src="./assets/styles/images/like-icon.svg" alt="" class="item_like-icon">
                 </button>
-                <button class="item_delete" onclick="deleteBasketItem(this, 'basket_item')">
+                <button class="item_delete">
                     <img src="./assets/styles/images/delete-icon.svg" alt="" class="item_delete-icon">
                 </button>
             </div>
@@ -310,6 +449,21 @@ const renderBasketItem = () => {
         basket.append(item);
     
         newPriceArray.push(obj.newPrice)
+    }
+
+    //Оживляем кнопки предметов
+    const wbCheckbox = basket.querySelectorAll(".wb-checkbox")
+    const itemsMinBtn = basket.querySelectorAll(".count_minus")
+    const itemsPlusBtn = basket.querySelectorAll(".count_plus")
+    const itemLike = basket.querySelectorAll(".item_like")
+    const itemDelete = basket.querySelectorAll(".item_delete")
+
+    for(let i = 0; i <= state.items.length - 1; i++){
+        itemsMinBtn[i].addEventListener("click", itemMinus)
+        itemsPlusBtn[i].addEventListener("click", itemPlus)
+        wbCheckbox[i].addEventListener("change", checkBoxItemChange)
+        itemLike[i].addEventListener("click", changeColorBtn)
+        itemDelete[i].addEventListener("click", deleteBasketItem)
     }
 }
 
@@ -518,9 +672,9 @@ const renderDeliveryItems = () =>{
 const rerenderDetails = () =>{
     renderDeliveryItems()
     renderTotalQuantity()
-    countTotalPrice()
-    countTotalWithOutDiscount()
-    countDiscount()
+    renderTotalPrice()
+    renderTotalWithOutDiscount()
+    renderDiscount()
 }
 
 const totalQuantity = document.getElementById("totalQuantity")
@@ -562,13 +716,8 @@ const renderTotalQuantity = () =>{
 
 const totalPrice = document.getElementById("totalPrice")
 
-const countTotalPrice = () =>{
-   let total = state.items.reduce((sum, elem) => {
-    if(elem.choose == true){
-        return sum += elem.newPrice * elem.quantity
-    }
-    return sum
-}, 0) 
+const renderTotalPrice = () =>{
+   let total = state.countTotalPrice()
    totalPrice.textContent = total.toLocaleString()
 
    totalPrice.insertAdjacentHTML(
@@ -581,13 +730,8 @@ const countTotalPrice = () =>{
 
 const totalWithOutDiscount = document.getElementById("totalWithOutDiscount")
 
-const countTotalWithOutDiscount = () =>{
-    let totalNotDiscount = state.items.reduce((sum, elem) => {
-        if(elem.choose == true){
-            return sum += elem.oldPrice * elem.quantity
-        }
-        return sum
-    }, 0)
+const renderTotalWithOutDiscount = () =>{
+    let totalNotDiscount = state.countTotalWithOutDiscount()
 
     totalWithOutDiscount.textContent = totalNotDiscount.toLocaleString()
 
@@ -601,13 +745,8 @@ const countTotalWithOutDiscount = () =>{
 
 const discount = document.getElementById("discount")
 
-const countDiscount = () =>{
-    let totalDiscount = state.items.reduce((sum, elem) => {
-        if(elem.choose == true){
-            return sum += elem.oldPrice * elem.quantity - elem.newPrice * elem.quantity
-        }
-        return sum
-    }, 0)
+const renderDiscount = () =>{
+    let totalDiscount = state.countDiscount()
 
     discount.textContent = "−" + totalDiscount.toLocaleString()
 
@@ -682,9 +821,9 @@ renderBasketItem()
 renderAbsentItem()
 renderDeliveryItems()
 renderTotalQuantity()
-countTotalPrice()
-countTotalWithOutDiscount()
-countDiscount()
+renderTotalPrice()
+renderTotalWithOutDiscount()
+renderDiscount()
 
 //Рендер модальных окон
 renderPersonalAddressList()
@@ -759,10 +898,6 @@ printLog(mobileWidth.matches);
 mobileWidth.addEventListener("change", function (event) {
     printLog(event.matches);
 });
-
-const changeColorBtn = (e) => {
-    e.classList.toggle("item_like-clicked")
-}
 
 const openHideModal = (idModal) => {
     let modal = document.getElementById(idModal)
@@ -1078,15 +1213,19 @@ const orderAllInput = () =>{
 
 //=============================>
 const selectAllItems = (e) => {
+    let target = e.target
     let checkboxes = document.getElementsByName("item-checkbox");
 
     for (let i = 0; i <= checkboxes.length - 1; i++) {
-        if(checkboxes[i].checked != e.checked){
-            checkboxes[i].checked = e.checked
+        if(checkboxes[i].checked != target.checked){
+            checkboxes[i].checked = target.checked
             checkboxes[i].dispatchEvent(new Event('change'))
         }
     }
 };
+
+const selectAllCheckBox = document.getElementById("selectAllCheckBox")
+selectAllCheckBox.addEventListener("click", selectAllItems)
 
 const hideBasketItemsBtn = document.getElementById("hideBasketItemsBtn")
 const hideAbsenceBtn = document.getElementById("hideAbsenceItems")
@@ -1143,15 +1282,6 @@ const hideAbsenceItem = (e) =>{
     e.classList.toggle("items_hidden")
 }
 
-const checkBoxItemChange = (e) =>{
-    let itemContainer = findParent(e, "basket_item")
-    let itemNumber = itemContainer.id.at(-1)
-    let itemState = state.items[itemNumber]
-
-    itemState.choose = !itemState.choose
-    rerenderDetails()
-}
-
 //=============================>Кнопки удаления
 const findParent = (elem, classParent) =>{
     if(elem.parentElement.classList.contains(classParent)){
@@ -1181,14 +1311,8 @@ const deletePersonalAddress = (e, classParent) => {
     parent.parentNode.removeChild(parent)
 }
 
-const deleteBasketItem = (e, classParent) =>{
-    let itemContainer = findParent(e, classParent)
-    let itemNumber = itemContainer.id.at(-1)
-    state.items[itemNumber].choose = false
-
-    itemContainer.parentNode.removeChild(itemContainer)
-
-    if(basketItemsList.children.length == 0){
+const renderCheckEmptyBasket = () =>{
+    if((basketItemsList.children.length == 0) && (absenceItemList.children.length == 0)){
         let basketPage = document.querySelector(".basket_page")
         basketPage.classList.add("basket_empty")
         basketPage.innerHTML = ''
@@ -1208,7 +1332,6 @@ const deleteBasketItem = (e, classParent) =>{
             `
         );
     }
-    rerenderDetails()
 }
 
 const deleteAbsenceItem = (e, classParent) =>{
@@ -1223,87 +1346,6 @@ const deleteAbsenceItem = (e, classParent) =>{
         absenceLine.parentNode.removeChild(absenceLine)
         headerAbsenceList.parentNode.removeChild(headerAbsenceList)
     }
-}
 
-//=============================>Реализация корзины
-const itemPlus = (e) =>{
-    const itemContainer = findParent(e, "basket_item")
-    const itemNumber = itemContainer.id.at(-1)
-    const itemQuantity = itemContainer.querySelector(".item_quantity")
-    const countMinus = itemContainer.querySelector(".count_minus")
-    const itemPriceNew = itemContainer.querySelector(".item_price-new")
-    const itemPriceOld = itemContainer.querySelector(".item_price-old")
-    const itemState = state.items[itemNumber]
-    let obj = arrayItems[itemNumber]
-
-    if(countMinus.disabled == true){
-        countMinus.disabled = false
-    }
-
-    itemState.quantity++
-    itemQuantity.textContent = itemState.quantity
-    itemPriceNew.textContent = state.countItemPrice(itemNumber).toLocaleString()
-    
-    itemPriceOld.textContent = state.countItemOldPrice(itemNumber).toLocaleString() + " сом"
-
-    itemPriceOld.insertAdjacentHTML(
-        "beforeend",
-        `
-            <div class="price_hint">
-                <div class="price_hint-txt">
-                    <div>Скидка ${obj.persentDiscount}%</div>
-                    <div>Скидка покупателя 10%</div>
-                </div>
-                <div class="price_hint-discount">
-                    <div>${obj.discount} сом</div>
-                    <div>−30 сом</div>
-                </div>
-            </div>
-        `
-    );
-
-
-    if(String(itemPriceNew.textContent).length > 6){
-        itemPriceNew.classList.add("big_price")
-    }
-
-    let limitQuantity =  arrayItems[itemNumber].left.reduce((sum, elem) =>{
-        return sum += elem
-    }, 0)
-
-    if(itemState.quantity == limitQuantity){
-        e.disabled = true
-    }
-
-    rerenderDetails()
-}
-
-const itemMinus = (e) =>{
-    const itemContainer = findParent(e, "basket_item")
-    const itemNumber = itemContainer.id.at(-1)
-    const itemQuantity = itemContainer.querySelector(".item_quantity")
-    const countPlus = itemContainer.querySelector(".count_plus")
-    const itemPriceNew = itemContainer.querySelector(".item_price-new")
-    const itemPriceOld = itemContainer.querySelector(".item_price-old")
-    const itemState = state.items[itemNumber]
-
-    if(countPlus.disabled == true){
-        countPlus.disabled = false
-    }
-
-    itemState.quantity--
-    itemQuantity.textContent = itemState.quantity
-    itemPriceNew.textContent = state.countItemPrice(itemNumber).toLocaleString()
-
-    itemPriceOld.textContent = state.countItemOldPrice(itemNumber).toLocaleString() + " сом"
-    
-    if(String(itemPriceNew.textContent).length <= 6){
-        itemPriceNew.classList.remove("big_price")
-    }
-
-    if(itemState.quantity == 1){
-        e.disabled = true
-    }
-
-    rerenderDetails()
+    renderCheckEmptyBasket()
 }

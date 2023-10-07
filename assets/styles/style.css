@@ -144,7 +144,7 @@ h2 {
   border-radius: 8px;
   color: white;
   margin-right: 16px;
-  background: url("./images/navigation-lines.svg") no-repeat center;
+  background: url("../images/navigation-lines.svg") no-repeat center;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   width: 48px;
@@ -237,7 +237,7 @@ h2 {
   z-index: 1;
   width: 24px;
   height: 24px;
-  background: url("./images/search-icon.svg");
+  background: url("../images/search-icon.svg");
 }
 
 .header_nav-pc {
@@ -258,7 +258,7 @@ h2 {
 
 .pc_profile-icon {
   display: block;
-  background: url("./images/profile-icon.svg");
+  background: url("../images/profile-icon.svg");
   width: 28px;
   height: 28px;
   margin: 1px 13px 8px 15px;
@@ -277,7 +277,7 @@ h2 {
 
 .pc_basket-icon {
   display: block;
-  background: url("./images/basket-icon.svg");
+  background: url("../images/basket-icon.svg");
   width: 28px;
   height: 28px;
   margin: 1px 18px 8px 10px;
@@ -372,7 +372,7 @@ h2 {
 }
 .wb-checkbox:checked {
   border: none;
-  background-image: url("./images/checkbox.svg");
+  background-image: url("../images/checkbox.svg");
   background-repeat: no-repeat;
 }
 
@@ -413,7 +413,7 @@ h2 {
 .basket_hide-items {
   width: 20px;
   height: 20px;
-  background: url("./images/hide-items-icon.svg");
+  background: url("../images/hide-items-icon.svg");
   margin-top: 2px;
   -webkit-transition: -webkit-transform 0.35s ease-in-out;
   transition: -webkit-transform 0.35s ease-in-out;
@@ -576,7 +576,7 @@ h2 {
 .info_icon {
   height: 20px;
   width: 20px;
-  background: url("./images/info-icon.svg");
+  background: url("../images/info-icon.svg");
   display: block;
   margin: 0;
 }
@@ -940,7 +940,7 @@ h2 {
   display: block;
   height: 12px;
   width: 12px;
-  background: url("./images/star-icon.svg");
+  background: url("../images/star-icon.svg");
   margin-right: 4px;
 }
 
@@ -1017,7 +1017,7 @@ h2 {
   width: 22px;
   height: 22px;
   margin-right: 8px;
-  background: url("./images/checkmark-icon.svg");
+  background: url("../images/checkmark-icon.svg");
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }
@@ -1103,16 +1103,16 @@ h2 {
   margin-right: 8px;
 }
 .basket_card-icon.mir_card-icon {
-  background: url("./images/mir-icon.svg");
+  background: url("../images/mir-icon.svg");
 }
 .basket_card-icon.visa_card-icon {
-  background: url("./images/visa-icon.svg");
+  background: url("../images/visa-icon.svg");
 }
 .basket_card-icon.master_card-icon {
-  background: url("./images/master-icon.svg");
+  background: url("../images/master-icon.svg");
 }
 .basket_card-icon.maestro_card-icon {
-  background: url("./images/maestro-icon.svg");
+  background: url("../images/maestro-icon.svg");
 }
 
 .basket_card-number, .basket_card-data {
@@ -1359,7 +1359,7 @@ footer::before {
 .pen_button {
   height: 20px;
   width: 20px;
-  background: url("./images/pen-icon.svg");
+  background: url("../images/pen-icon.svg");
 }
 
 .order_delivery-point {
@@ -1471,7 +1471,7 @@ footer::before {
   margin-right: 9px;
   -ms-flex-negative: 0;
       flex-shrink: 0;
-  background: url("./images/consent-icon.svg");
+  background: url("../images/consent-icon.svg");
 }
 
 .terms_use-txt {
@@ -1554,7 +1554,7 @@ footer::before {
 .modal_header-close {
   width: 24px;
   height: 24px;
-  background: url("./images/close-icon.svg") center no-repeat;
+  background: url("../images/close-icon.svg") center no-repeat;
 }
 
 .modal_info-container {
@@ -1608,12 +1608,12 @@ footer::before {
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  background: url("./images/wb-radio.svg") center no-repeat;
+  background: url("../images/wb-radio.svg") center no-repeat;
   cursor: pointer;
 }
 .wb-radio:checked {
   border: none;
-  background: url("./images/wb-radio-checked.svg") center no-repeat;
+  background: url("../images/wb-radio-checked.svg") center no-repeat;
 }
 
 .choose_card-container {
@@ -1719,7 +1719,7 @@ footer::before {
     width: 28px;
     height: 28px;
     border: none;
-    background: url("./images/navigation-lines-mob.svg");
+    background: url("../images/navigation-lines-mob.svg");
   }
   .nav_elem-logo {
     margin: 0px;
@@ -1754,7 +1754,7 @@ footer::before {
   .header-search-button {
     position: static;
     display: block;
-    background: url("./images/search-white-icon.svg") center no-repeat;
+    background: url("../images/search-white-icon.svg") center no-repeat;
   }
   .header_nav-pc {
     display: none;
@@ -1790,6 +1790,7 @@ footer::before {
   }
   .basket_form {
     margin: 0;
+    max-width: 100%;
   }
   h2 {
     font-size: 20px;
@@ -1835,7 +1836,7 @@ footer::before {
   .item_choice-btn .wb-checkbox:checked {
     border: none;
     background: none;
-    background-image: url("./images/checkbox.svg");
+    background-image: url("../images/checkbox.svg");
     background-repeat: no-repeat;
   }
   .basket_item {
@@ -2159,13 +2160,13 @@ footer::before {
     position: relative;
   }
   .mob_nav-container .mob_nav-elem.mob_nav-home {
-    background: url("./images/nav-home-mob.svg");
+    background: url("../images/nav-home-mob.svg");
   }
   .mob_nav-container .mob_nav-elem.mob_nav-search {
-    background: url("./images/nav-search-mob.svg");
+    background: url("../images/nav-search-mob.svg");
   }
   .mob_nav-container .mob_nav-elem.mob_nav-basket {
-    background: url("./images/nav-basket-mob.svg");
+    background: url("../images/nav-basket-mob.svg");
   }
   .mob_nav-container .mob_nav-elem.mob_nav-basket .mob_basket-amount {
     display: block;
@@ -2188,10 +2189,10 @@ footer::before {
     display: none;
   }
   .mob_nav-container .mob_nav-elem.mob_nav-favor {
-    background: url("./images/nav-favor-mob.svg");
+    background: url("../images/nav-favor-mob.svg");
   }
   .mob_nav-container .mob_nav-elem.mob_nav-profile {
-    background: url("./images/nav-profile-mob.svg");
+    background: url("../images/nav-profile-mob.svg");
   }
 }
 @media (max-width: 1000px) {
