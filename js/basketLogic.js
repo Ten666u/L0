@@ -11,6 +11,7 @@ const selectAllCheckBox = document.getElementById("selectAllCheckBox")
 const hideBasketItemsBtn = document.getElementById("hideBasketItemsBtn")
 const hideAbsenceItemsBtn = document.getElementById("hideAbsenceItemsBtn")
 const headerAbsenceList = document.getElementById("headerAbsenceList")
+const basketItemsList = document.getElementById("basketItemsList")
 const absenceItemList = document.getElementById("absenceItemList")
 const absenceItemCounter = document.getElementById("absenceItemCounter")
 const absenceLine = document.getElementById("absenceLine")
@@ -132,6 +133,7 @@ const itemPlus = (e) =>{
 
 const itemMinus = (e) =>{
     const target = e.target
+
     const itemContainer = findParent(target, "basket_item")
     const itemNumber = itemContainer.id.at(-1)
     const itemQuantity = itemContainer.querySelector(".item_quantity")
@@ -139,7 +141,7 @@ const itemMinus = (e) =>{
     const itemPriceNew = itemContainer.querySelector(".item_price-new")
     const itemPriceOld = itemContainer.querySelector(".item_price-old")
     const itemState = state.items[itemNumber]
-
+    
     if(countPlus.disabled == true){
         countPlus.disabled = false
     }
@@ -157,7 +159,6 @@ const itemMinus = (e) =>{
     if(itemState.quantity == 1){
         target.disabled = true
     }
-
     rerenderDetails()
 }
 
@@ -198,6 +199,14 @@ const deleteBasketItem = (e) =>{
 
     renderCheckEmptyBasket()
     rerenderDetails()
+
+    console.log(basketItemsList.childNodes.length);
+    if(basketItemsList.childNodes.length == 1){
+        const basketHeader = document.querySelector(".basket_buttons-items")
+        const basketFormLine = document.getElementById("basketFormLine")
+        basketHeader.classList.add("hide")
+        basketFormLine.classList.add("hide")
+    }
 }
 
 const deleteAbsenceItem = (e) =>{

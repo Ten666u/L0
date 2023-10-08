@@ -1,61 +1,98 @@
 import { personalArray, pointArray } from "./serverData.js";
+import { state } from "./state.js";
 
 import { findParent } from "./utilsDOM.js";
 
+const modal = document.getElementById("deliveryModal")
 const personalAddressList = document.getElementById("personalAddressList")
 const pointAddressList = document.getElementById("pointAddressList")
 
 const pointAddressBtn = document.getElementById("pointAddressBtn")
 const personalAddressBtn = document.getElementById("personalAddressBtn")
 
-
 const openDeliveryModalBtn = document.getElementById("openDeliveryModalBtn")
 const openDeliveryModalPenBtn = document.getElementById("openDeliveryModalPenBtn")
 const closeDeliveryModalBtn = document.getElementById("closeDeliveryModalBtn")
 const chooseDeliveryModalBtn = document.getElementById("chooseDeliveryModalBtn")
 
-const openHideModal = (idModal) => {
-    return () => {
-        let modal = document.getElementById(idModal)
+const openModal = () => {
+    pointAddressBtn.classList = personalAddressBtn.classList = "delivery_type-btn"
+
+    if(state.address[0] == "personal"){
+        choosePersonalList()
+        
+        const choosedAddress = document.getElementById(`personalAddress${state.address[1]}`)
+        choosedAddress.checked = true
         modal.classList.toggle("hidden")
+        return
     }
+
+    choosePointList()
+    const choosedAddress = document.getElementById(`pointAddress${state.address[1]}`)
+    choosedAddress.checked = true
+    modal.classList.toggle("hidden")
+}
+
+const hideModal = () => {
+    modal.classList.toggle("hidden")
 }
 
 const deletePointAddress = (e) => {
-    let target = e.target
+    const target = e.target
+    const parent = findParent(target, 'choose_address')
+    const address = parent.querySelector(".wb-radio")
 
-    let parent = findParent(target, 'choose_address')
+    if(state.address[0] == "point" && address.id.at(-1) == state.address[1]){
+        return
+    }
 
     if(pointAddressList.querySelectorAll(".choose_address").length == 1){
         target.disabled = true
         return
     }
+
+    if(state.address[0] == "point"){
+        const choosedAddress = document.getElementById(`pointAddress${state.address[1]}`)
+        choosedAddress.checked = true
+    }
+
     parent.parentNode.removeChild(parent)
 }
 
 const deletePersonalAddress = (e) => {
-    let target = e.target
-    let parent = findParent(target, "choose_address")
+    const target = e.target
+    const parent = findParent(target, "choose_address")
+    const address = parent.querySelector(".wb-radio")
+
+    if(state.address[0] == "personal" && address.id.at(-1) == state.address[1]){
+        return
+    }
 
     if(personalAddressList.querySelectorAll(".choose_address").length == 1){
         target.disabled = true
         return
     }
+
+    if(state.address[0] == "personal"){
+        const choosedAddress = document.getElementById(`personalAddress${state.address[1]}`)
+        choosedAddress.checked = true
+    }
+
     parent.parentNode.removeChild(parent)
 }
 
-const choosePointList = (e) =>{
+const choosePointList = () =>{
     personalAddressList.classList.add("hideAddress")
     pointAddressList.classList.remove("hideAddress")
     personalAddressBtn.classList.remove("type_btn-pressed")
-    e.target.classList.add("type_btn-pressed")
+    pointAddressBtn.classList.add("type_btn-pressed")
 }
 
-const choosePersonalList = (e) =>{
+const choosePersonalList = () =>{
     pointAddressList.classList.add("hideAddress")
     personalAddressList.classList.remove("hideAddress")
     pointAddressBtn.classList.remove("type_btn-pressed")
-    e.target.classList.add("type_btn-pressed")
+    personalAddressBtn.classList.add("type_btn-pressed")
 }
 
 const chooseAddress = () =>{
@@ -82,6 +119,7 @@ const chooseAddress = () =>{
         basketDeliveryData.textContent = `Ежедневно с ${objAddress.time[0]} до ${objAddress.time[1]}`
 
         orderDeliveryType.textContent = "Доставка в пункт выдачи"
+        state.address = ["point", chooseAddress.value]
     }
 
     else if(personalAddressBtn.classList.contains("type_btn-pressed")){
@@ -92,18 +130,19 @@ const chooseAddress = () =>{
         basketPointDetail.classList.add("hide")
 
         orderDeliveryType.textContent = "Доставка курьером"
+        state.address = ["personal", chooseAddress.value]
     }
 
     basketAddress.textContent = orderAddress.textContent = objAddress.address
-    openHideModal('deliveryModal')()
+    hideModal()
 }
 
 pointAddressBtn.addEventListener("click", choosePointList)
 personalAddressBtn.addEventListener("click", choosePersonalList)
 chooseDeliveryModalBtn.addEventListener("click", chooseAddress)
 
-openDeliveryModalBtn.addEventListener("click", openHideModal("deliveryModal"))
-openDeliveryModalPenBtn.addEventListener("click", openHideModal("deliveryModal"))
-closeDeliveryModalBtn.addEventListener("click", openHideModal("deliveryModal"))
+openDeliveryModalBtn.addEventListener("click", openModal)
+openDeliveryModalPenBtn.addEventListener("click", openModal)
+closeDeliveryModalBtn.addEventListener("click", hideModal)
 
 export { deletePersonalAddress, deletePointAddress }

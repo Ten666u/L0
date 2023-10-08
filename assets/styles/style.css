@@ -398,6 +398,9 @@ h2 {
 .basket_buttons-items.absence_list-hide {
   margin-bottom: 40px;
 }
+.basket_buttons-items.hide {
+  display: none;
+}
 
 .items_hidden-txt {
   display: none;
@@ -706,6 +709,8 @@ h2 {
   letter-spacing: -0.01em;
 }
 .item_price-new.big_price {
+  display: inline-block;
+  margin-top: 4px;
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
@@ -1879,6 +1884,9 @@ footer::before {
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
+  }
+  .item_price-new.big_price {
+    margin-top: 0;
   }
   .item_price-currency {
     display: inline-block;

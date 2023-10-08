@@ -31,7 +31,7 @@ const checkInputINN = (e) =>{
     const onlyNumber = /[0-9]/g
     const error = document.getElementById("errorINN")
 
-    str = target.value
+    let str = target.value
 
     str.match(onlyNumber) ? target.value = str.match(onlyNumber).join("") : target.value = ""
 
@@ -47,7 +47,7 @@ const checkInputPhone = (e) =>{
     const onlyNumber = /[0-9]/g
     const errorPhone = document.getElementById("errorPhone")
 
-    str = target.value.match(onlyNumber)
+    let str = target.value.match(onlyNumber)
 
     if(str == null){
         target.value = ""

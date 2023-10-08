@@ -1,7 +1,7 @@
 const state = {
     isPayImmediately: false,
     cardPay: "mirCard",
-    address: ["personal", [0]],
+    address: ["point", 1],
 
     items: [
         {

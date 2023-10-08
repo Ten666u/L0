@@ -110,8 +110,8 @@ const renderBasketItem = () => {
             "beforeend",
             `
             <div class="item_count">
-                <button class="count_minus" ${buttonMinusDisable}>
-                    <span class="font_count count_content">−</span>
+                <button class="font_count count_minus" ${buttonMinusDisable}>
+                    −
                 </button>
                 <span class="item_quantity">${itemState.quantity}</span>
                 <button class="font_count count_plus" ${buttonPlusDisable}>+</button>

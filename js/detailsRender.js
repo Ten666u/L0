@@ -12,6 +12,7 @@ const mobTotalQuantity = document.getElementById("mobTotalQuantity")
 const totalPrice = document.getElementById("totalPrice")
 const totalWithOutDiscount = document.getElementById("totalWithOutDiscount")
 const discount = document.getElementById("discount")
+const orderButtonTxt = document.getElementById("orderButtonTxt")
 
 const checkItems = () =>{
     for(let item of state.items){
@@ -197,12 +198,19 @@ const renderDiscount = () =>{
     );
 }
 
+const renderPayImmediately = () =>{
+    if(state.isPayImmediately){
+        orderButtonTxt.textContent = `Оплатить ${state.countTotalPrice().toLocaleString()} сом`
+    }
+}
+
 const rerenderDetails = () =>{
     renderDeliveryItems()
     renderTotalQuantity()
     renderTotalPrice()
     renderTotalWithOutDiscount()
     renderDiscount()
+    renderPayImmediately()
 }
 
 export { rerenderDetails }
