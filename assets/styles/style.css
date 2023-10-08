@@ -935,6 +935,9 @@ h2 {
           align-items: center;
   margin-top: 4px;
 }
+.delivery_point-detail.hide {
+  display: none;
+}
 
 .rating_picture {
   display: block;
