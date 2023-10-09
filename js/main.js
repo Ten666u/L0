@@ -11,6 +11,15 @@ import { checkINN, checkInputINN, checkPhone, checkInputPhone, checkFirstName, c
 
 import { openCloseCardModal, chooseCardModal } from "./cardModalLogic.js";
 
+//=========================================> Рендер страницы
+renderBasketItem()
+renderAbsentItem()
+rerenderDetails()
+
+//Рендер модального окна доставки
+renderPersonalAddressList()
+renderPointAddressList()
+
 const mobileWidth = window.matchMedia("(max-width: 1000px)");
 
 const selectPayImmediatelyBtn = document.getElementById("selectPayImmediatelyBtn")
@@ -104,6 +113,8 @@ const orderAllInput = () =>{
     }
 }
 
+printLog(mobileWidth.matches)
+
 mobileWidth.addEventListener("change", function (event) {printLog(event.matches);});
 
 openCardModalBtn.addEventListener("click", openCloseCardModal)
@@ -128,11 +139,3 @@ inputINN.addEventListener("input", checkInputINN)
 selectPayImmediatelyBtn.addEventListener("click", selectPayImmediately)
 orderButton.addEventListener("click", orderAllInput)
 
-//=========================================> Рендер страницы
-renderBasketItem()
-renderAbsentItem()
-rerenderDetails()
-
-//Рендер модального окна доставки
-renderPersonalAddressList()
-renderPointAddressList()
